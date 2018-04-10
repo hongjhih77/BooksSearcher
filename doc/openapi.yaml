@@ -1,0 +1,75 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Book Searcher
+  
+servers:
+  - url: http://localhost/v1
+paths:
+  /books/{isbn}:
+    get:
+      summary: Info for books
+      tags:
+        - book
+      parameters:
+        - name: isbn
+          description: isbn10 or isbn13
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int64
+          example: 111,222,333
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"    
+components:
+  schemas:
+    Book: 
+      properties:
+        isbn13:
+          type: integer
+          format: int64
+        isbn10:
+          type: integer
+          format: int64
+        title:
+          type: string
+        pages:
+          type: integer
+        author:
+          type: array
+          items:
+            type: string
+        publishDate:
+          type: string
+        language:
+          type: string
+        publisher:
+          type: string
+
+    Books:
+      type: array
+      items:
+        $ref: "#/components/schemas/Book"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
