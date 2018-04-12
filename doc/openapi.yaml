@@ -18,9 +18,8 @@ paths:
           required: true
           style: simple
           schema:
-            type: integer
-            format: int64
-          example: 111,222,333
+            type: string
+          example: 0375725784,9780375725784
       responses:
         '200':
           description: Expected response to a valid request
@@ -39,11 +38,13 @@ components:
     Book: 
       properties:
         isbn13:
-          type: integer
-          format: int64
+          type: string
+          minLength: 13
+          maxLength: 13
         isbn10:
-          type: integer
-          format: int64
+          type: string
+          minLength: 10
+          maxLength: 10
         title:
           type: string
         pages:
@@ -54,6 +55,8 @@ components:
             type: string
         publishDate:
           type: string
+          format: date
+          description: https://swagger.io/docs/specification/data-models/data-types/#string
         language:
           type: string
         publisher:
