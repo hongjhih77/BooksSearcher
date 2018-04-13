@@ -2,7 +2,6 @@ package jpa.domain;
 
 
 import jpa.domain.embeddable.OperationInfo;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
@@ -30,6 +29,8 @@ public class Book {
   public Book(String title) {
     this.title = title;
   }
+
+  private String originalTile;
 
   @Column(length = 13)
   private String isbn13;
@@ -61,6 +62,14 @@ public class Book {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getOriginalTile() {
+    return originalTile;
+  }
+
+  public void setOriginalTile(String originalTile) {
+    this.originalTile = originalTile;
   }
 
   public String getIsbn13() {
