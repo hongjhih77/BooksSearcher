@@ -1,6 +1,7 @@
 package jpa.domain;
 
 
+import jpa.domain.embeddable.OperationInfo;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -43,6 +44,8 @@ public class Book {
   private String publisher;
 
   private long publishTime;
+
+  private OperationInfo operationInfo;
 
   public Long getId() {
     return id;
@@ -106,5 +109,13 @@ public class Book {
 
   public void setPublishTime(long publishTime) {
     this.publishTime = publishTime;
+  }
+
+  public OperationInfo getOperationInfo() {
+    return operationInfo;
+  }
+
+  public void setOperationInfo(OperationInfo operationInfo) {
+    this.operationInfo = operationInfo;
   }
 }
