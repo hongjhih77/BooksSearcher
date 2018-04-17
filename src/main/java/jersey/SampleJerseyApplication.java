@@ -16,10 +16,13 @@
 
 package jersey;
 
+import io.swagger.api.gen.api.ApiOriginFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,15 +30,24 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 @EntityScan("jpa.domain")
 @EnableJpaRepositories("jpa.repositoryimpl")
-@ComponentScan({"jersey", "jpa.repositoryimpl","io.swagger.api.gen.api"})
+@ComponentScan({"jersey", "jpa.repositoryimpl", "io.swagger.api.gen.api"})
 @Transactional
 public class SampleJerseyApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		new SampleJerseyApplication()
-				.configure(new SpringApplicationBuilder(SampleJerseyApplication.class))
-				.run(args);
-	}
+  public static void main(String[] args) {
+    new SampleJerseyApplication()
+        .configure(new SpringApplicationBuilder(SampleJerseyApplication.class))
+        .run(args);
+  }
 
-
+  @Bean
+  public FilterRegistrationBean apiOriginFilterRegistration() {
+    FilterRegistrationBean registration = new FilterRegistrationBean();
+    registration.setFilter(new ApiOriginFilter());
+    registration.addUrlPatterns("/*");
+    registration.addInitParameter("paramName", "paramValue");
+    registration.setName("ApiOriginFilter");
+    registration.setOrder(1);
+    return registration;
+  }
 }
