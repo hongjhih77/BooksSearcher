@@ -71,6 +71,7 @@ public class AmazonBookParser implements IBookParser {
       _book.setIsbn10(ISBN10);
       _book.setIsbn13(ISBN13);
       _book.setAuthor(authorString);
+      _book.setItemUrl(urlBook);
 
       return _book;
     } catch (IOException e) {

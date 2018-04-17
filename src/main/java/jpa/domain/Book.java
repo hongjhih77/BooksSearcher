@@ -46,6 +46,8 @@ public class Book {
 
   private long publishTime;
 
+  private String itemUrl;
+
   private OperationInfo operationInfo;
 
   public Long getId() {
@@ -126,5 +128,13 @@ public class Book {
 
   public void setOperationInfo(OperationInfo operationInfo) {
     this.operationInfo = operationInfo;
+  }
+
+  public String getItemUrl() {
+    return itemUrl;
+  }
+
+  public void setItemUrl(String itemUrl) {
+    this.itemUrl = itemUrl;
   }
 }

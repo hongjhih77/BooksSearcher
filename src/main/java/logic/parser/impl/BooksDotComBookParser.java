@@ -159,7 +159,7 @@ public class BooksDotComBookParser implements IBookParser {
       _book.setAuthor(String.join(", ", authors));
       _book.setIsbn13(isbn13);
       _book.setPages(pages);
-
+      _book.setItemUrl(itemUrl);
       return _book;
     }catch (Exception e){
       e.printStackTrace();
