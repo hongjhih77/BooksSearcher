@@ -11,6 +11,8 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -75,7 +77,7 @@ public class AmazonBookParser extends BookParserHandler {
       _book.setItemUrl(urlBook);
 
       return Optional.of(_book);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       //TODO LOG
     }
@@ -119,7 +121,6 @@ public class AmazonBookParser extends BookParserHandler {
       for (Element element : bylineEle.getElementsByTag("table")) {
         Element authorEle = element.getElementsByClass("a-size-medium").first();
         String author = ((TextNode) authorEle.childNodes().get(0)).getWholeText().trim();
-        System.out.println("Author : " + author);
         authors.add(author);
       }
     } catch (Exception e) {
@@ -133,13 +134,17 @@ public class AmazonBookParser extends BookParserHandler {
     return ((TextNode) productTitleEle.childNodes().get(0)).getWholeText();
   }
 
-  private String getItemUrl(String urlSearch) throws IOException {
+  private String getItemUrl(String urlSearch) throws IOException, URISyntaxException {
     Connection connectionSearch = getConnection(urlSearch);
     Document htmlDocument = connectionSearch.get();
     Element element_result_0 = htmlDocument.getElementById("result_0");
     Elements element_title = element_result_0.getElementsByClass("a-link-normal s-access-detail-page  s-color-twister-title-link a-text-normal");
-
-    return element_title.first().attr("href");
+    String itemUrl = element_title.first().attr("href");
+    URI uri = new URI(itemUrl);
+    String[] strings = (uri.getHost() + uri.getPath()).split("[/]");
+    String[] cleanStrings = {strings[0], strings[1], strings[2], strings[3]};
+    itemUrl = String.join("/", cleanStrings);
+    return "https://" + itemUrl;
   }
 
   private Connection getConnection(String url) {
