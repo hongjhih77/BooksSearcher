@@ -16,6 +16,7 @@
 
 package jersey;
 
+import io.swagger.api.gen.api.BooksApi;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import org.springframework.stereotype.Component;
@@ -24,8 +25,10 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
-		register(Endpoint.class);
-		register(ReverseEndpoint.class);
+//		register(Endpoint.class);
+//		register(ReverseEndpoint.class);
+		register(BooksApi.class);
+		property("jersey.config.server.wadl.disableWadl", true);
 	}
 
 }
