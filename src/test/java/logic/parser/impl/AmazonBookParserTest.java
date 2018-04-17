@@ -30,6 +30,7 @@ public class AmazonBookParserTest {
         book_correct.setPages(437);
         book_correct.setAuthor("Dave Eggers");
         book_correct.setPublisher("Vintage");
+        book_correct.setItemUrl("https://www.amazon.com/Heartbreaking-Work-Staggering-Genius/dp/0375725784");
 
         SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
         Instant instant = format.parse("February 13, 2001").toInstant();
