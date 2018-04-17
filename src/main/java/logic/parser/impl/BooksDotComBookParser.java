@@ -1,7 +1,7 @@
 package logic.parser.impl;
 
 import jpa.domain.Book;
-import logic.parser.IBookParser;
+import logic.parser.Hendler.BookParserHandler;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,17 +11,20 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
-public class BooksDotComBookParser implements IBookParser {
+public class BooksDotComBookParser extends BookParserHandler {
   @Override
-  public Book getBook(String isbn) {
+  public Optional<Book> getBook(String isbn) {
 
     String urlSearch = "http://search.books.com.tw/search/query/key/" + isbn + "/cat/all";
 
@@ -160,12 +163,13 @@ public class BooksDotComBookParser implements IBookParser {
       _book.setIsbn13(isbn13);
       _book.setPages(pages);
       _book.setItemUrl(itemUrl);
-      return _book;
+      return Optional.of(_book);
     }catch (Exception e){
       e.printStackTrace();
+      //TODO LOG
     }
 
-    return null;
+    return Optional.empty();
   }
 
   private String getItemUrl(String urlSearch) {
@@ -179,6 +183,7 @@ public class BooksDotComBookParser implements IBookParser {
       Elements h3s = items.get(0).getElementsByTag("h3");
       if(h3s.size() != 1) return null;
       itemUrl = h3s.get(0).getElementsByTag("a").get(0).attr("href");
+      itemUrl = getFinalURL(itemUrl);
     }catch (IOException e){
       //TODO LOG
     }
@@ -186,6 +191,20 @@ public class BooksDotComBookParser implements IBookParser {
   }
 
   private Connection getConnection(String url) {
-    return Jsoup.connect(url).userAgent(USER_AGENT);
+    return Jsoup.connect(url).followRedirects(true).userAgent(USER_AGENT);
+  }
+
+  public static String getFinalURL(String url) throws IOException {
+    //https://stackoverflow.com/questions/14951696/java-urlconnection-get-the-final-redirected-url
+    HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+    con.setInstanceFollowRedirects(false);
+    con.connect();
+    con.getInputStream();
+
+    if (con.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM || con.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP) {
+      String redirectUrl = con.getHeaderField("Location");
+      return getFinalURL(redirectUrl);
+    }
+    return url;
   }
 }

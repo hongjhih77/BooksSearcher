@@ -1,7 +1,7 @@
 package logic.parser.impl;
 
 import jpa.domain.Book;
-import logic.parser.IBookParser;
+import logic.parser.Hendler.BookParserHandler;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,13 +17,14 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import static javax.ws.rs.core.HttpHeaders.USER_AGENT;
 
-public class AmazonBookParser implements IBookParser {
+public class AmazonBookParser extends BookParserHandler {
 
   @Override
-  public Book getBook(String isbn) {
+  public Optional<Book> getBook(String isbn) {
 
     String urlSearch = "https://www.amazon.com/gp/search/ref=sr_adv_b/?search-alias=stripbooks&unfiltered=1&field-keywords=&field-author=&field-title=&field-isbn=" + isbn + "&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=9";
 
@@ -73,13 +74,13 @@ public class AmazonBookParser implements IBookParser {
       _book.setAuthor(authorString);
       _book.setItemUrl(urlBook);
 
-      return _book;
+      return Optional.of(_book);
     } catch (IOException e) {
       e.printStackTrace();
+      //TODO LOG
     }
 
-
-    return null;
+    return Optional.empty();
   }
 
   private long getPublishedDateMillis(Elements elelis) {
