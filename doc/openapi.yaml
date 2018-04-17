@@ -2,7 +2,8 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Book Searcher
-  
+security:
+  - ApiKeyAuth: []
 servers:
   - url: http://localhost/v1
 paths:
@@ -34,6 +35,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"    
 components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: X-API-KEY  # name of the header, query parameter or cookie
   schemas:
     Book: 
       properties:
