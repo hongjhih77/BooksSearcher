@@ -104,8 +104,16 @@ To see some logs:
 $ kubectl logs <POD-NAME>
 ```
 
+Swagger Codegen for server stub/client library cmd
+```sh
+$ java -jar {swagger-codegen.jar path} gernerate \ 
+-i {yaml path} \  #openapi.yaml
+-l {stub type} \  #jaxrs-jersey
+-o {output path} \ 
+```
+* https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO
 
-
+ 
 #### References
 * https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/index.html#0
 * https://github.com/spring-guides/gs-spring-boot-docker
