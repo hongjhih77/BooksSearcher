@@ -20,6 +20,10 @@
     <properties>
         <docker.image.prefix>springio</docker.image.prefix>
         <java.version>1.8</java.version>
+        <swagger-core-version>1.5.18</swagger-core-version>
+        <javax-ws-rs-version>1.1.1</javax-ws-rs-version>
+        <org-jsoup-version>1.11.2</org-jsoup-version>
+        <jackson-datatype-joda-version>2.8.9</jackson-datatype-joda-version>
     </properties>
 
     <build>
@@ -89,13 +93,24 @@
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
-            <version>1.1.1</version>
+            <version>${javax-ws-rs-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jersey2-jaxrs</artifactId>
+            <scope>compile</scope>
+            <version>${swagger-core-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>${jackson-datatype-joda-version}</version>
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.11.2</version>
+            <version>${org-jsoup-version}</version>
         </dependency>
         <!-- Provided -->
         <dependency>
@@ -109,6 +124,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!--TestNG-->
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.9.6</version>
