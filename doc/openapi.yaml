@@ -70,11 +70,6 @@ components:
         publisher:
           type: string
 
-    Books:
-      type: array
-      items:
-        $ref: "#/components/schemas/Book"
-
     BooksSearchBody:
       description: A object containing books foound information
       properties:
@@ -87,7 +82,9 @@ components:
           items:
             type: string
         booksFoundList:
-          $ref: "#/components/schemas/Books"
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
 
     Error:
       required:
