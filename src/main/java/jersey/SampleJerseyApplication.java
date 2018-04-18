@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 @EntityScan("jpa.domain")
 @EnableJpaRepositories("jpa.repositoryimpl")
-@ComponentScan({"jersey", "jpa.repositoryimpl", "io.swagger.api.gen.api"})
+@ComponentScan({"jersey", "jpa.repositoryimpl", "io"})
 @Transactional
 public class SampleJerseyApplication extends SpringBootServletInitializer {
 
