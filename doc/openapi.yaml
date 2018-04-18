@@ -27,7 +27,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Books"
+                type: object
+                properties:
+                  notFoundList:
+                    type: array
+                    items:
+                      type: string
+                  booksFoundList:
+                    $ref: "#/components/schemas/Books"
         default:
           description: unexpected error
           content:
