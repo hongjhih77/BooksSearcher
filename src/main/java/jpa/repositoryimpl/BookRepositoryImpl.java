@@ -8,14 +8,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -87,4 +85,17 @@ public class BookRepositoryImpl implements IBookRepository {
         }
         return true;
     }
+
+  @Override
+  public Optional<Book> findBookByISBN(String isbn) {
+    try {
+      TypedQuery<Book> query =
+          entityManager.createQuery(
+              "SELECT b FROM Book b WHERE b.isbn13 = :isbn or b.isbn10 = :isbn", Book.class);
+      return Optional.ofNullable(query.setParameter("isbn", isbn).getSingleResult());
+    } catch (NoResultException e) {
+        //TODO LOG
+    }
+    return Optional.empty();
+  }
 }
