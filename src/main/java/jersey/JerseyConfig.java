@@ -19,16 +19,16 @@ package jersey;
 import io.swagger.api.gen.api.BooksApi;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
-//		register(Endpoint.class);
-//		register(ReverseEndpoint.class);
 		register(BooksApi.class);
 		property("jersey.config.server.wadl.disableWadl", true);
+		property(ServletProperties.FILTER_FORWARD_ON_404, true);//#for static-web-files
 	}
 
 }
