@@ -30,6 +30,7 @@ public class Book {
     this.title = title;
   }
 
+  @Column(length = 128)
   private String originalTile;
 
   @Column(length = 13)
@@ -38,13 +39,15 @@ public class Book {
   @Column(length = 10)
   private String isbn10;
 
-  private int pages;
+  private Integer pages;
 
+  @Column(length = 128)
   private String author;
 
+  @Column(length = 64)
   private String publisher;
 
-  private long publishTime;
+  private Long publishTime;
 
   private String itemUrl;
 
@@ -90,11 +93,11 @@ public class Book {
     this.isbn10 = isbn10;
   }
 
-  public int getPages() {
+  public Integer getPages() {
     return pages;
   }
 
-  public void setPages(int pages) {
+  public void setPages(Integer pages) {
     this.pages = pages;
   }
 
@@ -114,20 +117,12 @@ public class Book {
     this.publisher = publisher;
   }
 
-  public long getPublishTime() {
+  public Long getPublishTime() {
     return publishTime;
   }
 
-  public void setPublishTime(long publishTime) {
+  public void setPublishTime(Long publishTime) {
     this.publishTime = publishTime;
-  }
-
-  public OperationInfo getOperationInfo() {
-    return operationInfo;
-  }
-
-  public void setOperationInfo(OperationInfo operationInfo) {
-    this.operationInfo = operationInfo;
   }
 
   public String getItemUrl() {
@@ -136,5 +131,13 @@ public class Book {
 
   public void setItemUrl(String itemUrl) {
     this.itemUrl = itemUrl;
+  }
+
+  public OperationInfo getOperationInfo() {
+    return operationInfo;
+  }
+
+  public void setOperationInfo(OperationInfo operationInfo) {
+    this.operationInfo = operationInfo;
   }
 }

@@ -5,33 +5,33 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class OperationInfo {
 
-  private long createTime;
+  private Long createTime;
 
-  private long updateTime;
+  private Long updateTime;
 
-  private long deleteTime;
+  private Long deleteTime;
 
-  public long getCreateTime() {
+  public Long getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(long createTime) {
+  public void setCreateTime(Long createTime) {
     this.createTime = createTime;
   }
 
-  public long getUpdateTime() {
+  public Long getUpdateTime() {
     return updateTime;
   }
 
-  public void setUpdateTime(long updateTime) {
+  public void setUpdateTime(Long updateTime) {
     this.updateTime = updateTime;
   }
 
-  public long getDeleteTime() {
+  public Long getDeleteTime() {
     return deleteTime;
   }
 
-  public void setDeleteTime(long deleteTime) {
+  public void setDeleteTime(Long deleteTime) {
     this.deleteTime = deleteTime;
   }
 }
