@@ -12,22 +12,17 @@
 
 package io.swagger.api.gen.model;
 
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.Objects;
 
 /** Book */
 @javax.annotation.Generated(
   value = "io.swagger.codegen.languages.java.JavaJerseyServerCodegen",
-  date = "2018-04-17T14:21:51.738+08:00[Asia/Taipei]"
+  date = "2018-04-18T23:48:03.893+08:00[Asia/Taipei]"
 )
 public class Book {
 
@@ -40,11 +35,14 @@ public class Book {
   @JsonProperty("title")
   private String title = null;
 
+  @JsonProperty("originalTile")
+  private String originalTile = null;
+
   @JsonProperty("pages")
   private Integer pages = null;
 
   @JsonProperty("author")
-  private List<String> author = null;
+  private String author = null;
 
   @JsonProperty("publishDate")
   private Date publishDate = null;
@@ -117,6 +115,26 @@ public class Book {
     this.title = title;
   }
 
+  public Book originalTile(String originalTile) {
+    this.originalTile = originalTile;
+    return this;
+  }
+
+  /**
+   * Get originalTile
+   *
+   * @return originalTile
+   */
+  @JsonProperty("originalTile")
+  @ApiModelProperty(value = "")
+  public String getOriginalTile() {
+    return originalTile;
+  }
+
+  public void setOriginalTile(String originalTile) {
+    this.originalTile = originalTile;
+  }
+
   public Book pages(Integer pages) {
     this.pages = pages;
     return this;
@@ -137,18 +155,8 @@ public class Book {
     this.pages = pages;
   }
 
-  public Book author(List<String> author) {
+  public Book author(String author) {
     this.author = author;
-    return this;
-  }
-
-  public Book addAuthorItem(String authorItem) {
-
-    if (this.author == null) {
-      this.author = new ArrayList<String>();
-    }
-
-    this.author.add(authorItem);
     return this;
   }
 
@@ -159,11 +167,11 @@ public class Book {
    */
   @JsonProperty("author")
   @ApiModelProperty(value = "")
-  public List<String> getAuthor() {
+  public String getAuthor() {
     return author;
   }
 
-  public void setAuthor(List<String> author) {
+  public void setAuthor(String author) {
     this.author = author;
   }
 
@@ -239,6 +247,7 @@ public class Book {
     return Objects.equals(this.isbn13, book.isbn13)
         && Objects.equals(this.isbn10, book.isbn10)
         && Objects.equals(this.title, book.title)
+        && Objects.equals(this.originalTile, book.originalTile)
         && Objects.equals(this.pages, book.pages)
         && Objects.equals(this.author, book.author)
         && Objects.equals(this.publishDate, book.publishDate)
@@ -248,7 +257,8 @@ public class Book {
 
   @Override
   public int hashCode() {
-    return Objects.hash(isbn13, isbn10, title, pages, author, publishDate, language, publisher);
+    return Objects.hash(
+        isbn13, isbn10, title, originalTile, pages, author, publishDate, language, publisher);
   }
 
   @Override
@@ -259,6 +269,7 @@ public class Book {
     sb.append("    isbn13: ").append(toIndentedString(isbn13)).append("\n");
     sb.append("    isbn10: ").append(toIndentedString(isbn10)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    originalTile: ").append(toIndentedString(originalTile)).append("\n");
     sb.append("    pages: ").append(toIndentedString(pages)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("    publishDate: ").append(toIndentedString(publishDate)).append("\n");

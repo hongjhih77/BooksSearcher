@@ -5,7 +5,7 @@ info:
 security:
   - ApiKeyAuth: []
 servers:
-  - url: http://localhost/v1
+  - url: http://localhost:8080
 paths:
   /books/{isbn}:
     get:
@@ -55,12 +55,12 @@ components:
           maxLength: 10
         title:
           type: string
+        originalTile:
+          type: string
         pages:
           type: integer
         author:
-          type: array
-          items:
-            type: string
+          type: string
         publishDate:
           type: string
           format: date
