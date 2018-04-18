@@ -1,15 +1,11 @@
 package io.swagger.api.gen.api;
 
 import io.swagger.annotations.ApiParam;
-import io.swagger.api.factories.BooksApiServiceFactory;
 import io.swagger.api.gen.model.Books;
+import io.swagger.api.impl.BooksApiServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.ServletConfigAware;
-import org.springframework.web.context.ServletContextAware;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,11 +22,11 @@ import javax.ws.rs.core.SecurityContext;
   date = "2018-04-17T14:21:51.738+08:00[Asia/Taipei]"
 )
 public class BooksApi{
-  private final BooksApiService delegate;
+
+  @Autowired
+  private BooksApiServiceImpl delegate;
 
   public BooksApi() {
-    BooksApiService delegate = BooksApiServiceFactory.getBooksApi();
-    this.delegate = delegate;
   }
 
   @GET
