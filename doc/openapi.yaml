@@ -27,20 +27,15 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  notFoundList:
-                    type: array
-                    items:
-                      type: string
-                  booksFoundList:
-                    $ref: "#/components/schemas/Books"
+                $ref: "#/components/schemas/BooksSearchBody"
+        '400':
+          description: Bad request. isbn must be composed of delimiter comma.
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"    
+                $ref: "#/components/schemas/Error"
 components:
   securitySchemes:
     ApiKeyAuth:        # arbitrary name for the security scheme
@@ -48,7 +43,7 @@ components:
       in: header       # can be "header", "query" or "cookie"
       name: X-API-KEY  # name of the header, query parameter or cookie
   schemas:
-    Book: 
+    Book:
       properties:
         isbn13:
           type: string
@@ -79,6 +74,21 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Book"
+
+    BooksSearchBody:
+      description: A object containing books foound information
+      properties:
+        found:
+          type: integer
+        notFound:
+          type: integer
+        notFoundList:
+          type: array
+          items:
+            type: string
+        booksFoundList:
+          $ref: "#/components/schemas/Books"
+
     Error:
       required:
         - code
