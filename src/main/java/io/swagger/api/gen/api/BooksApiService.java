@@ -7,7 +7,7 @@ import javax.ws.rs.core.SecurityContext;
 
 public abstract class BooksApiService {
     
-    public abstract Response booksIsbnGet(String isbn,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response booksIsbnGet(String isbn,SecurityContext securityContext);
     
 }
 

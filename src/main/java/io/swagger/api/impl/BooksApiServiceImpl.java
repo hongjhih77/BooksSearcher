@@ -1,7 +1,6 @@
 package io.swagger.api.impl;
 
 import io.swagger.api.gen.api.BooksApiService;
-import io.swagger.api.gen.api.NotFoundException;
 import io.swagger.api.gen.model.BooksSearchBody;
 import jpa.domain.Book;
 import jpa.repositoryimpl.BookRepositoryImpl;
@@ -29,8 +28,7 @@ public class BooksApiServiceImpl extends BooksApiService {
   @Autowired BookRepositoryImpl bookRepository;
 
   @Override
-  public Response booksIsbnGet(String isbns, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response booksIsbnGet(String isbns, SecurityContext securityContext) {
 
     String[] _isbns = isbns.split(",");
     List<String> bookNotFoundList = new ArrayList<>();

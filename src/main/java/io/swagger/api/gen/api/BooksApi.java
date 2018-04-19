@@ -59,8 +59,7 @@ public class BooksApi {
   )
   public Response booksIsbnGet(
       @ApiParam(value = "isbn10 or isbn13", required = true) @PathParam("isbn") String isbn,
-      @Context SecurityContext securityContext)
-      throws NotFoundException {
+      @Context SecurityContext securityContext) {
     return delegate.booksIsbnGet(isbn, securityContext);
   }
 }
