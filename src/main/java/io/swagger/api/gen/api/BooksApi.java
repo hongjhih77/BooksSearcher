@@ -1,7 +1,7 @@
 package io.swagger.api.gen.api;
 
 import io.swagger.annotations.ApiParam;
-import io.swagger.api.gen.model.Books;
+import io.swagger.api.gen.model.BooksSearchBody;
 import io.swagger.api.impl.BooksApiServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,13 +21,11 @@ import javax.ws.rs.core.SecurityContext;
   value = "io.swagger.codegen.languages.java.JavaJerseyServerCodegen",
   date = "2018-04-17T14:21:51.738+08:00[Asia/Taipei]"
 )
-public class BooksApi{
+public class BooksApi {
 
-  @Autowired
-  private BooksApiServiceImpl delegate;
+  @Autowired private BooksApiServiceImpl delegate;
 
-  public BooksApi() {
-  }
+  public BooksApi() {}
 
   @GET
   @Path("/{isbn}")
@@ -35,7 +33,7 @@ public class BooksApi{
   @io.swagger.annotations.ApiOperation(
     value = "Info for books",
     notes = "",
-    response = Books.class,
+    response = BooksSearchBody.class,
     tags = {
       "book",
     }
@@ -45,7 +43,12 @@ public class BooksApi{
       @io.swagger.annotations.ApiResponse(
         code = 200,
         message = "Expected response to a valid request",
-        response = Books.class
+        response = BooksSearchBody.class
+      ),
+      @io.swagger.annotations.ApiResponse(
+        code = 400,
+        message = "Bad request. isbn must be composed of delimiter comma.",
+        response = Void.class
       ),
       @io.swagger.annotations.ApiResponse(
         code = 200,
@@ -60,5 +63,4 @@ public class BooksApi{
       throws NotFoundException {
     return delegate.booksIsbnGet(isbn, securityContext);
   }
-
 }
