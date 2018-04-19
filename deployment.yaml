@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: hello-java:v3
+          image: hello-java:v1
           ports:
             - containerPort: 8080
           # The following environment variables will contain the database host,
