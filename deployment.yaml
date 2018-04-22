@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: hello-java:v1
+          image: booksearcher:v5
           ports:
             - containerPort: 8080
           # The following environment variables will contain the database host,
@@ -32,26 +32,6 @@ spec:
                   name: cloudsql-db-credentials
                   key: password
             # [END cloudsql_secrets]
-            - name: POSTGRESSQL_DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: booksearcher-credentials
-                  key: host
-            - name: POSTGRESSQL_DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: booksearcher-credentials
-                  key: port
-            - name: POSTGRESSQL_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: booksearcher-credentials
-                  key: username
-            - name: POSTGRESSQL_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: booksearcher-credentials
-                  key: password
         # Change <INSTANCE_CONNECTION_NAME> here to include your GCP
         # project, the region of your Cloud SQL instance and the name
         # of your Cloud SQL instance. The format is
