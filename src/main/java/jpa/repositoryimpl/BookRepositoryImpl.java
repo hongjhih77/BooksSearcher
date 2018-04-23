@@ -99,7 +99,7 @@ public class BookRepositoryImpl implements IBookRepository {
               "SELECT b FROM Book b WHERE b.isbn13 = :isbn or b.isbn10 = :isbn", Book.class);
       return Optional.ofNullable(query.setParameter("isbn", isbn).getSingleResult());
     } catch (NoResultException e) {
-        //TODO LOG
+      Logservice.errorSaveJson(isbn, e, this.getClass());
     }
     return Optional.empty();
   }
