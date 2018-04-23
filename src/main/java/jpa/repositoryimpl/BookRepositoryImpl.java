@@ -1,17 +1,13 @@
 package jpa.repositoryimpl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jpa.domain.Book;
 import jpa.repository.BookSearchCriteria;
 import jpa.repository.IBookRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import util.Logservice;
+import util.LogService;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -57,7 +53,7 @@ public class BookRepositoryImpl implements IBookRepository {
     try {
       entityManager.persist(book);
     } catch (PersistenceException e) {
-      Logservice.errorSaveJson(book, e, this.getClass());
+      LogService.errorSaveJson(book, e, this.getClass());
       return false;
     }
     return true;
@@ -68,7 +64,7 @@ public class BookRepositoryImpl implements IBookRepository {
     try {
       entityManager.merge(book);
     } catch (PersistenceException e) {
-      Logservice.errorSaveJson(book, e, this.getClass());
+      LogService.errorSaveJson(book, e, this.getClass());
       return false;
     }
     return true;
@@ -80,7 +76,7 @@ public class BookRepositoryImpl implements IBookRepository {
       Book _book = entityManager.find(Book.class, book.getId());
       entityManager.remove(_book);
     } catch (PersistenceException e) {
-      Logservice.errorSaveJson(book, e, this.getClass());
+      LogService.errorSaveJson(book, e, this.getClass());
       return false;
     }
     return true;
@@ -94,7 +90,7 @@ public class BookRepositoryImpl implements IBookRepository {
               "SELECT b FROM Book b WHERE b.isbn13 = :isbn or b.isbn10 = :isbn", Book.class);
       return Optional.ofNullable(query.setParameter("isbn", isbn).getSingleResult());
     } catch (NoResultException e) {
-      Logservice.errorSaveJson(isbn, e, this.getClass());
+      LogService.errorSaveJson(isbn, e, this.getClass());
     }
     return Optional.empty();
   }
