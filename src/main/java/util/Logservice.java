@@ -14,4 +14,10 @@ public class Logservice {
       log.error(e);
     }
   }
+
+  public static void error(Throwable throwable, Class<?> clazz){
+    Log log = LogFactory.getLog(clazz);
+    log.error(throwable);
+  }
+
 }
