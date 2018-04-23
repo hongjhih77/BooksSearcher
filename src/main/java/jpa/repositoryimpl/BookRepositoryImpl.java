@@ -24,72 +24,67 @@ import java.util.Optional;
 @Transactional
 public class BookRepositoryImpl implements IBookRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+  @PersistenceContext private EntityManager entityManager;
 
-    @Override
-    public List<Book> findAll(BookSearchCriteria searchCriteria, Pageable pageable) {
+  @Override
+  public List<Book> findAll(BookSearchCriteria searchCriteria, Pageable pageable) {
 
-        Assert.notNull(searchCriteria, "searchCriteria is null");
-        Assert.notNull(pageable, "pageable is null");
+    Assert.notNull(searchCriteria, "searchCriteria is null");
+    Assert.notNull(pageable, "pageable is null");
 
-        int pageNumber = pageable.getPageNumber();
-        int pageSize = pageable.getPageSize();
+    int pageNumber = pageable.getPageNumber();
+    int pageSize = pageable.getPageSize();
 
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> countQuery = criteriaBuilder
-                .createQuery(Long.class);
-        countQuery.select(criteriaBuilder
-                .count(countQuery.from(Book.class)));
-        Long count = entityManager.createQuery(countQuery)
-                .getSingleResult();
+    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+    countQuery.select(criteriaBuilder.count(countQuery.from(Book.class)));
+    Long count = entityManager.createQuery(countQuery).getSingleResult();
 
-        CriteriaQuery<Book> criteriaQuery = criteriaBuilder
-                .createQuery(Book.class);
-        Root<Book> from = criteriaQuery.from(Book.class);
-        CriteriaQuery<Book> select = criteriaQuery.select(from);
+    CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+    Root<Book> from = criteriaQuery.from(Book.class);
+    CriteriaQuery<Book> select = criteriaQuery.select(from);
 
-        TypedQuery<Book> typedQuery = entityManager.createQuery(select);
+    TypedQuery<Book> typedQuery = entityManager.createQuery(select);
 
-        typedQuery.setFirstResult(pageNumber - 1);
-        typedQuery.setMaxResults(pageSize);
+    typedQuery.setFirstResult(pageNumber - 1);
+    typedQuery.setMaxResults(pageSize);
 
-        return typedQuery.getResultList();
+    return typedQuery.getResultList();
+  }
+
+  @Override
+  public boolean addBook(Book book) {
+    try {
+      entityManager.persist(book);
+    } catch (PersistenceException e) {
+      Logservice.errorSaveJson(book, e, this.getClass());
+      return false;
     }
+    return true;
+  }
 
-    @Override
-    public boolean addBook(Book book) {
-        try {
-            entityManager.persist(book);
-        } catch (PersistenceException e) {
-          Logservice.errorSaveJson(book, e, this.getClass());
-          return false;
-        }
-        return true;
+  @Override
+  public boolean updateBook(Book book) {
+    try {
+      entityManager.merge(book);
+    } catch (PersistenceException e) {
+      Logservice.errorSaveJson(book, e, this.getClass());
+      return false;
     }
+    return true;
+  }
 
-    @Override
-    public boolean updateBook(Book book) {
-        try {
-          entityManager.merge(book);
-        } catch (PersistenceException e) {
-          Logservice.errorSaveJson(book, e, this.getClass());
-          return false;
-        }
-        return true;
+  @Override
+  public boolean deleteBook(Book book) {
+    try {
+      Book _book = entityManager.find(Book.class, book.getId());
+      entityManager.remove(_book);
+    } catch (PersistenceException e) {
+      Logservice.errorSaveJson(book, e, this.getClass());
+      return false;
     }
-
-    @Override
-    public boolean deleteBook(Book book) {
-        try {
-            Book _book = entityManager.find(Book.class, book.getId());
-            entityManager.remove(_book);
-        } catch (PersistenceException e) {
-          Logservice.errorSaveJson(book, e, this.getClass());
-          return false;
-        }
-        return true;
-    }
+    return true;
+  }
 
   @Override
   public Optional<Book> findBookByISBN(String isbn) {
