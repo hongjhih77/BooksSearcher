@@ -29,7 +29,10 @@ public class AmazonBookParser extends BookParserHandler {
   @Override
   public Optional<Book> getBook(String isbn) {
 
-    String urlSearch = "https://www.amazon.com/gp/search/ref=sr_adv_b/?search-alias=stripbooks&unfiltered=1&field-keywords=&field-author=&field-title=&field-isbn=" + isbn + "&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=9";
+    String urlSearch =
+        "https://www.amazon.com/gp/search/ref=sr_adv_b/?search-alias=stripbooks&unfiltered=1&field-keywords=&field-author=&field-title=&field-isbn="
+            + isbn
+            + "&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=9";
 
     try {
       String urlBook = getItemUrl(urlSearch);
@@ -37,35 +40,36 @@ public class AmazonBookParser extends BookParserHandler {
       Connection connection = getConnection(urlBook);
       Document htmlDocument = connection.get();
 
-      //get title
+      // get title
       String title = getTitle(htmlDocument);
 
-      //get Authors
+      // get Authors
       List<String> authors = getAuthors(htmlDocument);
       String authorString = String.join(", ", authors);
 
       Element elementProductDetailsTable = htmlDocument.getElementById("productDetailsTable");
       Elements elelis = elementProductDetailsTable.getElementsByTag("li");
 
-      //get pages
+      // get pages
       String columnValue_pages = getColumnValueFromDetail(elelis, "Paperback");
       String pageString = columnValue_pages.replace("pages", "").trim();
       int pages = Integer.valueOf(pageString);
 
-      //get published Date time
+      // get published Date time
       long publishedDateMillis = getPublishedDateMillis(elelis);
 
-      //get publisher
+      // get publisher
       String columnValue_Publisher = getColumnValueFromDetail(elelis, "Publisher");
-      String publisher = columnValue_Publisher.substring(0, columnValue_Publisher.indexOf(";")).trim();
+      String publisher =
+          columnValue_Publisher.substring(0, columnValue_Publisher.indexOf(";")).trim();
 
-      //get Lang
+      // get Lang
       String language = getColumnValueFromDetail(elelis, "Language").trim();
 
       // get ISBN10
       String ISBN10 = getColumnValueFromDetail(elelis, "ISBN-10").trim();
 
-      //get ISBN13
+      // get ISBN13
       String ISBN13 = getColumnValueFromDetail(elelis, "ISBN-13").trim().replace("-", "");
 
       Book _book = new Book(title);
@@ -90,7 +94,9 @@ public class AmazonBookParser extends BookParserHandler {
     String columnValue_Publisher = getColumnValueFromDetail(elelis, "Publisher");
 
     try {
-      String formattedDate = columnValue_Publisher.substring(columnValue_Publisher.indexOf("(") + 1, columnValue_Publisher.indexOf(")"));
+      String formattedDate =
+          columnValue_Publisher.substring(
+              columnValue_Publisher.indexOf("(") + 1, columnValue_Publisher.indexOf(")"));
       SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
       Instant instant = format.parse(formattedDate).toInstant();
       epochMillis = instant.toEpochMilli();
@@ -138,7 +144,9 @@ public class AmazonBookParser extends BookParserHandler {
     Connection connectionSearch = getConnection(urlSearch);
     Document htmlDocument = connectionSearch.get();
     Element element_result_0 = htmlDocument.getElementById("result_0");
-    Elements element_title = element_result_0.getElementsByClass("a-link-normal s-access-detail-page  s-color-twister-title-link a-text-normal");
+    Elements element_title =
+        element_result_0.getElementsByClass(
+            "a-link-normal s-access-detail-page  s-color-twister-title-link a-text-normal");
     String itemUrl = element_title.first().attr("href");
     URI uri = new URI(itemUrl);
     String[] strings = (uri.getHost() + uri.getPath()).split("[/]");
