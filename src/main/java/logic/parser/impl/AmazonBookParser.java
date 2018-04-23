@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import util.Logservice;
 
 import java.io.IOException;
 import java.net.URI;
@@ -78,8 +79,7 @@ public class AmazonBookParser extends BookParserHandler {
 
       return Optional.of(_book);
     } catch (Exception e) {
-      e.printStackTrace();
-      //TODO LOG
+      Logservice.error(e, this.getClass());
     }
 
     return Optional.empty();
@@ -95,7 +95,7 @@ public class AmazonBookParser extends BookParserHandler {
       Instant instant = format.parse(formattedDate).toInstant();
       epochMillis = instant.toEpochMilli();
     } catch (ParseException e) {
-      //TODO LOG
+      Logservice.error(e, this.getClass());
     }
     return epochMillis;
   }
@@ -124,7 +124,7 @@ public class AmazonBookParser extends BookParserHandler {
         authors.add(author);
       }
     } catch (Exception e) {
-      //TODO LOG
+      Logservice.error(e, this.getClass());
     }
     return authors;
   }

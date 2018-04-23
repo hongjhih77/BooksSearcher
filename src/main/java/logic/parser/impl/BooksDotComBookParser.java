@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import util.Logservice;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -45,7 +46,7 @@ public class BooksDotComBookParser extends BookParserHandler {
       try {
         originalTitle = ((TextNode) titleEles.get(0).parent().getElementsByTag("h2").get(0).children().get(0).childNodes().get(0)).getWholeText().trim();
       }catch (Exception e){
-        //TODO LOG
+        Logservice.error(e, this.getClass());
       }
 
       // get authors
@@ -165,8 +166,7 @@ public class BooksDotComBookParser extends BookParserHandler {
       _book.setItemUrl(itemUrl);
       return Optional.of(_book);
     }catch (Exception e){
-      e.printStackTrace();
-      //TODO LOG
+      Logservice.error(e, this.getClass());
     }
 
     return Optional.empty();
@@ -185,7 +185,7 @@ public class BooksDotComBookParser extends BookParserHandler {
       itemUrl = h3s.get(0).getElementsByTag("a").get(0).attr("href");
       itemUrl = getFinalURL(itemUrl);
     }catch (IOException e){
-      //TODO LOG
+      Logservice.error(e, this.getClass());
     }
     return itemUrl;
   }
