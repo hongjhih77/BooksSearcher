@@ -1,7 +1,7 @@
 node {
-    def project = 'REPLACE_WITH_YOUR_PROJECT_ID'
-    def appName = 'gceme'
-    def feSvcName = "${appName}-frontend"
+    def project = 'my-tw-zone-project'
+    def appName = 'BookSearcher'
+    def feSvcName = "${appName}-RestApi"
     def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
     checkout scm
@@ -9,8 +9,8 @@ node {
     stage 'Build image'
     sh("docker build -t ${imageTag} .")
 
-    stage 'Run Go tests'
-    sh("docker run ${imageTag} go test")
+//    stage 'Run Go tests'  TODO
+//    sh("docker run ${imageTag} go test")
 
     stage 'Push image to registry'
     sh("gcloud docker -- push ${imageTag}")
@@ -20,7 +20,7 @@ node {
     // Roll out to canary environment
         case "canary":
             // Change deployed image in canary to the one we just built
-            sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${imageTag}#' ./k8s/canary/*.yaml")
+            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./k8s/canary/*.yaml")
             sh("kubectl --namespace=production apply -f k8s/services/")
             sh("kubectl --namespace=production apply -f k8s/canary/")
             sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
@@ -29,7 +29,7 @@ node {
     // Roll out to production
         case "master":
             // Change deployed image in canary to the one we just built
-            sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${imageTag}#' ./k8s/production/*.yaml")
+            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./k8s/production/*.yaml")
             sh("kubectl --namespace=production apply -f k8s/services/")
             sh("kubectl --namespace=production apply -f k8s/production/")
             sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
@@ -41,7 +41,7 @@ node {
             sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
             // Don't use public load balancing for development branches
             sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml")
-            sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${imageTag}#' ./k8s/dev/*.yaml")
+            sh("sed -i.bak 's#bbooksearcher:1.0.0#${imageTag}#' ./k8s/dev/*.yaml")
             sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/")
             sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dev/")
             echo 'To access your environment run `kubectl proxy`'
