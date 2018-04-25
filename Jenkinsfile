@@ -1,6 +1,6 @@
 node {
     def project = 'my-tw-zone-project'
-    def appName = 'BookSearcher'
+    def appName = 'booksearcher'
     def feSvcName = "${appName}-RestApi"
     def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
