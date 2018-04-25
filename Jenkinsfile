@@ -6,6 +6,9 @@ node {
 
     checkout scm
 
+    stage 'Packaging'
+    sh("./mvnw -DskipTests package")
+
     stage 'Build image'
     sh("docker build -t ${imageTag} .")
 
