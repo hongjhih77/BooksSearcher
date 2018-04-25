@@ -24,7 +24,7 @@ node {
     // Roll out to canary environment
         case "canary":
             // Change deployed image in canary to the one we just built
-            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./*.yaml")
+            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./k8s/canary/*.yaml")
             sh("kubectl --namespace=production apply -f k8s/canary/")
             sh("echo http://`kubectl --namespace=production get service/${serviceNmae} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
             break
@@ -32,7 +32,7 @@ node {
     // Roll out to production
         case "master":
             // Change deployed image in canary to the one we just built
-            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./*.yaml")
+            sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./k8s/production/*.yaml")
             sh("kubectl --namespace=production apply -f k8s/production/")
             sh("echo http://`kubectl --namespace=production get service/${serviceNmae} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
             break
