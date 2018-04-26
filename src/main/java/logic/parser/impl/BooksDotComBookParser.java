@@ -85,8 +85,7 @@ public class BooksDotComBookParser extends BookParserHandler {
       } else {
         List<Node> nodes_author_group = authorEles.get(0).childNodes();
         boolean startRecordElement = false;
-        for (int i = 0; i < nodes_author_group.size(); i++) {
-          Node node = nodes_author_group.get(i);
+        for (Node node : nodes_author_group) {
           if (node instanceof TextNode && ((TextNode) node).getWholeText().contains("作者")) {
             startRecordElement = true;
           } else if (node instanceof Element && node.toString().contains("trace_btn1")) {
@@ -211,7 +210,7 @@ public class BooksDotComBookParser extends BookParserHandler {
     return Jsoup.connect(url).followRedirects(true).userAgent(USER_AGENT);
   }
 
-  public static String getFinalURL(String url) throws IOException {
+  private static String getFinalURL(String url) throws IOException {
     // https://stackoverflow.com/questions/14951696/java-urlconnection-get-the-final-redirected-url
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
     con.setInstanceFollowRedirects(false);
