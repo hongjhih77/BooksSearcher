@@ -17,7 +17,8 @@
     Restart the proxy if disconnected. 
     1. Find the port used by poxy and kill the process
         ```sh
-        $ [sudo] lsof -i :<PORT>` `kill -9 <PID>
+        $ [sudo] lsof -i :<PORT>
+        $ kill -9 <PID>
         ```
     2. Restart the proxy 
         ```sh
@@ -66,10 +67,44 @@ Automatically opens up a browser window
 $ minikube service myapp
 ```
 
-##### Problem set of Phase 1:
+##### Problem and possible Solution set of Phase 1:
 
 1. The application.properties file will be packaged. If the database configuration want to be set dynamically, redeployment will be needed. 
-
+   
+   Apply Kubernetes ConfigMaps or Secrets. 
+      
+    In application.properties file:
+    
+    ```sh 
+    spring.datasource.url=jdbc:postgresql://${POSTGRES_DB_HOST}/postgres
+    spring.datasource.username=${POSTGRES_DB_USER}
+    spring.datasource.password=${POSTGRES_DB_PASSWORD}
+    ```
+    
+    In the deployment yaml file: set up ENV for the java application
+    
+    ```sh 
+    env:
+        - name: POSTGRES_DB_HOST
+          value: 127.0.0.1:5432
+        # [START cloudsql_secrets]
+        - name: POSTGRES_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: username
+        - name: POSTGRES_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: password
+    ```
+    
+    And, apply the secrets:
+    ```sh 
+    $ kubectl create secret generic cloudsql-db-credentials \
+        --from-literal=username=[USERNAME] --from-literal=password=[PASSWORD]
+    ```
 2. What if the approval of schema creation from DBA needed? 
     
     Tools of version control database:
@@ -78,6 +113,7 @@ $ minikube service myapp
     
     [How to generate a ddl creation script with a modern Spring Boot + Data JPA and Hibernate setup?](https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h)
     
+
 #### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
@@ -119,3 +155,10 @@ $ java -jar {swagger-codegen.jar path} gernerate \
 * https://github.com/spring-guides/gs-spring-boot-docker
 * https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
 * https://blog.hasura.io/using-minikube-as-a-docker-machine-to-avoid-sharing-a-local-registry-bf5020b8197
+
+##### Java
+* https://www.leveluplunch.com/java/tutorials/016-transform-object-class-into-another-type-java8/
+* https://www.geekmj.org/jersey/spring-boot-jersey-static-web-files-support-403/
+
+##### K8S
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/
