@@ -31,8 +31,6 @@ public class BooksDotComBookParser extends BookParserHandler {
 
     String itemUrl = getItemUrl(urlSearch);
 
-    System.out.println("itemUrl : " + itemUrl);
-
     try {
       Connection connection = getConnection(itemUrl);
       Document htmlDocument = connection.get();
