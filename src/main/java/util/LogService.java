@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.logging.Logger;
+
 public class LogService {
   public static void errorSaveJson(Object object, Throwable throwable, Class<?> clazz){
-    Log log = LogFactory.getLog(clazz);
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
     try {
       log.error(new ObjectMapper().writeValueAsString(object),throwable);
     } catch (JsonProcessingException e) {
@@ -16,7 +18,7 @@ public class LogService {
   }
 
   public static void error(Throwable throwable, Class<?> clazz){
-    Log log = LogFactory.getLog(clazz);
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
     log.error(throwable);
   }
 

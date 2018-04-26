@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class ApiOriginFilter implements Filter {
 
-  private final transient Log logger = LogFactory.getLog(this.getClass());
+  private final transient Log logger = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
@@ -26,7 +27,7 @@ public class ApiOriginFilter implements Filter {
     long time = System.currentTimeMillis();
     chain.doFilter(request, response);
     time = System.currentTimeMillis() - time;
-    logger.trace(((HttpServletRequest) request).getRequestURI() + " : " + time + " ms ");
+    logger.info(((HttpServletRequest) request).getRequestURI() + " : " + time + " ms ");
   }
 
   public void destroy() {}
