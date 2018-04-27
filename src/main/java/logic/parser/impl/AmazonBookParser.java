@@ -120,14 +120,19 @@ public class AmazonBookParser extends BookParserHandler {
   }
 
   private List<String> getAuthors(Document htmlDocument) {
-    Element bylineEle = htmlDocument.getElementById("byline");
+    Element bylineEle = htmlDocument.getElementById("bylineInfo");
     List<String> authors = new ArrayList<>();
 
     try {
-      for (Element element : bylineEle.getElementsByTag("table")) {
-        Element authorEle = element.getElementsByClass("a-size-medium").first();
-        String author = ((TextNode) authorEle.childNodes().get(0)).getWholeText().trim();
-        authors.add(author);
+      for (Element element : bylineEle.getElementsByAttribute("data-asin")) {
+
+        for (Node node : element.childNodes()){
+          if(node instanceof TextNode){
+            String author = ((TextNode) node).getWholeText().trim();
+            authors.add(author);
+            continue;
+          }
+        }
       }
     } catch (Exception e) {
       LogService.error(e, this.getClass());
