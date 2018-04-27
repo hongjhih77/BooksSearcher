@@ -28,7 +28,7 @@ public class JerseyConfig extends ResourceConfig {
 	public JerseyConfig() {
 		register(BooksApi.class);
 		property("jersey.config.server.wadl.disableWadl", true);
-		property(ServletProperties.FILTER_FORWARD_ON_404, true);//#for static-web-files
+//		property(ServletProperties.FILTER_FORWARD_ON_404, true);//#for static-web-files
 	}
 
 }
