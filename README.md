@@ -159,6 +159,10 @@ $ java -jar {swagger-codegen.jar path} gernerate \
 ##### Java
 * https://www.leveluplunch.com/java/tutorials/016-transform-object-class-into-another-type-java8/
 * https://www.geekmj.org/jersey/spring-boot-jersey-static-web-files-support-403/
+* [ Maven Surefire Plugin / Using TestNG](http://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html)
 
 ##### K8S
 * https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+* [Continuous Deployment to Kubernetes Engine using Jenkins](https://cloud.google.com/solutions/continuous-delivery-jenkins-kubernetes-engine)
+* [Setting up Jenkins on Kubernetes Engine](https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial)
+* 
