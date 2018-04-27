@@ -126,8 +126,8 @@ public class AmazonBookParser extends BookParserHandler {
     try {
       for (Element element : bylineEle.getElementsByAttribute("data-asin")) {
 
-        for (Node node : element.childNodes()){
-          if(node instanceof TextNode){
+        for (Node node : element.childNodes()) {
+          if (node instanceof TextNode) {
             String author = ((TextNode) node).getWholeText().trim();
             authors.add(author);
             continue;
