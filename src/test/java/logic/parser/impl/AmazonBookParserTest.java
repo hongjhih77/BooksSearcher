@@ -4,47 +4,71 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jpa.domain.Book;
 import logic.parser.Hendler.BookParserHandler;
-import logic.parser.IBookParser;
-import org.junit.Test;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 public class AmazonBookParserTest {
 
-    @Test
-    public void getBook() throws ParseException {
-        BookParserHandler iBookParser = new AmazonBookParser();
-        Optional<Book> bookParsed = iBookParser.getBook("9780375725784");
+  @DataProvider(name = "testBook")
+  public Object[][] createData() {
+    return new Object[][] {
+      {
+        "9780375725784",
+        "A Heartbreaking Work of Staggering Genius",
+        "9780375725784",
+        "0375725784",
+        437,
+        "Dave Eggers",
+        "Vintage",
+        "February 13, 2001",
+        "https://www.amazon.com/Heartbreaking-Work-Staggering-Genius/dp/0375725784"
+      }
+    };
+  }
 
-        Book book_correct = new Book("A Heartbreaking Work of Staggering Genius");
-        book_correct.setIsbn13("9780375725784");
-        book_correct.setIsbn10("0375725784");
-        book_correct.setPages(437);
-        book_correct.setAuthor("Dave Eggers");
-        book_correct.setPublisher("Vintage");
-        book_correct.setItemUrl("https://www.amazon.com/Heartbreaking-Work-Staggering-Genius/dp/0375725784");
+  @Test(dataProvider = "testBook")
+  public void getBook(
+      String isbn,
+      String title,
+      String ISBN13,
+      String ISBN10,
+      int pages,
+      String authors,
+      String publisher,
+      String publishedDate,
+      String itemUrl)
+      throws ParseException {
+    BookParserHandler iBookParser = new AmazonBookParser();
+    Optional<Book> bookParsed = iBookParser.getBook(isbn);
 
-        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-        Instant instant = format.parse("February 13, 2001").toInstant();
-        long epochMillis = instant.toEpochMilli();
-        book_correct.setPublishTime(epochMillis);
+    Book book_correct = new Book(title);
+    book_correct.setIsbn13(ISBN13);
+    book_correct.setIsbn10(ISBN10);
+    book_correct.setPages(pages);
+    book_correct.setAuthor(authors);
+    book_correct.setPublisher(publisher);
+    book_correct.setItemUrl(itemUrl);
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String correctJson = mapper.writeValueAsString(book_correct);
-            String bookParsedJson = mapper.writeValueAsString(bookParsed.get());
-            assertThat(correctJson).isEqualTo(bookParsedJson);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+    Instant instant = format.parse(publishedDate).toInstant();
+    long epochMillis = instant.toEpochMilli();
+    book_correct.setPublishTime(epochMillis);
 
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      String correctJson = mapper.writeValueAsString(book_correct);
+      String bookParsedJson = mapper.writeValueAsString(bookParsed.get());
+      assertThat(correctJson).isEqualTo(bookParsedJson);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
     }
+  }
 }
