@@ -62,9 +62,6 @@ public class AmazonBookParserTest {
     long epochMillis = instant.toEpochMilli();
     book_correct.setPublishTime(epochMillis);
 
-    //fail the test for testing Jenkins pipeline
-    assertThat(true).isEqualTo(false);
-
     ObjectMapper mapper = new ObjectMapper();
     try {
       String correctJson = mapper.writeValueAsString(book_correct);
