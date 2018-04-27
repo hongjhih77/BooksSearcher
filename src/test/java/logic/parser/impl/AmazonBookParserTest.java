@@ -34,7 +34,7 @@ public class AmazonBookParserTest {
     };
   }
 
-  @Test(dataProvider = "testBook")
+  @Test(dataProvider = "testBook", groups = "BookParser.Amazon")
   public void getBook(
       String isbn,
       String title,

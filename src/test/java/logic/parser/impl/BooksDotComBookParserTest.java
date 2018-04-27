@@ -56,7 +56,7 @@ public class BooksDotComBookParserTest {
     };
   }
 
-  @Test(dataProvider = "testBook")
+  @Test(dataProvider = "testBook", groups = "BookParser.BooksDotCom")
   public void testGetBook(
       String key,
       String title,
