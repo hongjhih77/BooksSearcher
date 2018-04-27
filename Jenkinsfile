@@ -7,14 +7,14 @@ node {
 
     checkout scm
 
+    stage 'Testing'
+    sh("./mvnw test")
+
     stage 'Packaging'
     sh("./mvnw -DskipTests package")
 
     stage 'Build image'
     sh("docker build -t ${imageTag} .")
-
-//    stage 'Run Go tests'  TODO
-//    sh("docker run ${imageTag} go test")
 
     stage 'Push image to registry'
     sh("gcloud docker -- push ${imageTag}")
