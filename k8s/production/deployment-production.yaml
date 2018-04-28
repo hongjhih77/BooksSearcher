@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: myapp
+  name: booksearcher-prod
   labels:
-    app: myapp
+    app: booksearcher
 spec:
   template:
     metadata:
       labels:
-        app: myapp
+        app: booksearcher
     spec:
       containers:
         - name: app

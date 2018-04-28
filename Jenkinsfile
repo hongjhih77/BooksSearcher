@@ -1,10 +1,9 @@
 node {
     def project = 'my-tw-zone-project'
     def appName = 'booksearcher'
-    def feSvcName = "${appName}-RestApi"
     def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
-    def serviceNmae = "myapp"
     def serviceCanary = "${appName}-canary"
+    def serviceProd = "${appName}-prod"
 
     checkout scm
 
@@ -35,7 +34,7 @@ node {
             // Change deployed image in canary to the one we just built
             sh("sed -i.bak 's#booksearcher:1.0.0#${imageTag}#' ./k8s/production/*.yaml")
             sh("kubectl --namespace=production apply -f k8s/production/")
-            sh("echo http://`kubectl --namespace=production get service/${serviceNmae} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
+            sh("echo http://`kubectl --namespace=production get service/${serviceProd} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${serviceProd}")
             break
 
     // Roll out a dev environment
