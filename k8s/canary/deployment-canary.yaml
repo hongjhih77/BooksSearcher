@@ -16,11 +16,15 @@ spec:
           ports:
             - containerPort: 8080
           readinessProbe:
-            httpGet:
-                path: /healthz
-                port: 8080
+            tcpSocket:
+              port: 8080
             initialDelaySeconds: 5
-            periodSeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
           # The following environment variables will contain the database host,
           # user and password to connect to the PostgreSQL instance.
           env:
