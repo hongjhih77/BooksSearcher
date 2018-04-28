@@ -15,18 +15,18 @@ spec:
           image: booksearcher:1.0.0
           ports:
             - containerPort: 8080
-          readinessProbe:
-            httpGet:
-                path: /healthcheck
-                port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-                path: /healthcheck
-                port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 5
+#          readinessProbe:
+#            httpGet:
+#                path: /healthcheck
+#                port: 8080
+#            initialDelaySeconds: 5
+#            periodSeconds: 5
+#          livenessProbe:
+#            httpGet:
+#                path: /healthcheck
+#                port: 8080
+#            initialDelaySeconds: 5
+#            periodSeconds: 5
           # The following environment variables will contain the database host,
           # user and password to connect to the PostgreSQL instance.
           env:
