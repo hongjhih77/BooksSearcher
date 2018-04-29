@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ import java.util.logging.Logger;
 @EnableJpaRepositories("jpa.repositoryimpl")
 @ComponentScan({"jersey", "jpa.repositoryimpl", "io"})
 @Transactional
+@RequestMapping(value = { "${url.entrance.mapping}" })
 public class SampleJerseyApplication extends SpringBootServletInitializer {
   private static Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
   public static void main(String[] args) {
