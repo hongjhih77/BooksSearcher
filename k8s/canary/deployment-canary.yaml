@@ -19,13 +19,13 @@ spec:
             httpGet:
                 path: /canary/healthcheck
                 port: 8080
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             periodSeconds: 10
           livenessProbe:
             httpGet:
                 path: /canary/healthcheck
                 port: 8080
-            initialDelaySeconds: 40
+            initialDelaySeconds: 60
             periodSeconds: 10
           # The following environment variables will contain the database host,
           # user and password to connect to the PostgreSQL instance.
