@@ -15,20 +15,18 @@ spec:
           image: booksearcher:1.0.0
           ports:
             - containerPort: 8080
-#          readinessProbe:
-#            httpGet:
-#                path: /canary/healthcheck
-#                port: 8080
-#            initialDelaySeconds: 120
-#            periodSeconds: 10
-#            timeoutSeconds: 20
-#          livenessProbe:
-#            httpGet:
-#                path: /canary/healthcheck
-#                port: 8080
-#            initialDelaySeconds: 130
-#            periodSeconds: 20
-#            timeoutSeconds: 20
+          readinessProbe:
+            httpGet:
+                path: /canary/healthcheck
+                port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+                path: /canary/healthcheck
+                port: 8080
+            initialDelaySeconds: 25
+            periodSeconds: 20
           # The following environment variables will contain the database host,
           # user and password to connect to the PostgreSQL instance.
           env:
@@ -51,7 +49,7 @@ spec:
                   # The ConfigMap containing the value you want to assign to PLATFORM
                   name: application-properties-platforms
                   # Specify the key associated with the value
-                  key: production
+                  key: canary
             # [END cloudsql_secrets]
         # Change <INSTANCE_CONNECTION_NAME> here to include your GCP
         # project, the region of your Cloud SQL instance and the name
