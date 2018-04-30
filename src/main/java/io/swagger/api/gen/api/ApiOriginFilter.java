@@ -15,11 +15,6 @@ import java.io.IOException;
 @Component
 public class ApiOriginFilter implements Filter {
 
-//  @Value("${PLATFORM}")
-//  private String platform;
-
-//  private final transient Log logger = LogFactory.getLog(platform);
-
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     HttpServletResponse res = (HttpServletResponse) response;
