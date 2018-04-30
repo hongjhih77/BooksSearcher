@@ -2,6 +2,7 @@ package io.swagger.api.gen.api;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -16,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class ApiOriginFilter implements Filter {
 
-  private final transient Log logger = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
+  @Value("${spring.profiles.active}")
+  private String profilesActive;
+
+  private final transient Log logger = LogFactory.getLog(profilesActive);
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
