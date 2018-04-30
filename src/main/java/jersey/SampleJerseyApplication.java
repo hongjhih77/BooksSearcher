@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 @SpringBootApplication
 @EntityScan("jpa.domain")
 @EnableJpaRepositories("jpa.repositoryimpl")
-@ComponentScan({"jersey", "jpa.repositoryimpl", "io"})
+@ComponentScan({"jersey", "jpa.repositoryimpl", "io", "util"})
 @Transactional
 public class SampleJerseyApplication extends SpringBootServletInitializer {
   private static Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
