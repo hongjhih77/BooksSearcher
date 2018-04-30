@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fanout-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: booksearcher-prod
+          servicePort: 8080
+      - path: /canary/*
+        backend:
+          serviceName: booksearcher-canary
+          servicePort: 8080
