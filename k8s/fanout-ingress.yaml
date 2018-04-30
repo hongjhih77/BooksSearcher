@@ -6,7 +6,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /prod/*
         backend:
           serviceName: booksearcher-prod
           servicePort: 8080
