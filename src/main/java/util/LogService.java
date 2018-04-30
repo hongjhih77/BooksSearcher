@@ -4,20 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
 
-@Component
 public class LogService {
 
   private static final String PLATFORM =
       System.getenv().getOrDefault("PLATFORM", Logger.GLOBAL_LOGGER_NAME);
 
-  private static final String LOGGER_NAME = PLATFORM;
 
   public static void errorSaveJson(Object object, Throwable throwable, Class<?> clazz){
-    Log log = LogFactory.getLog(LOGGER_NAME);
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
+    log.error(PLATFORM + ":");
     try {
       log.error(new ObjectMapper().writeValueAsString(object),throwable);
     } catch (JsonProcessingException e) {
@@ -26,14 +24,14 @@ public class LogService {
   }
 
   public static void error(Throwable throwable, Class<?> clazz){
-    Log log = LogFactory.getLog(LOGGER_NAME);
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
+    log.error(PLATFORM + ":");
     log.error(throwable);
   }
 
   public static void info(String msg){
-    System.out.println(PLATFORM + " : " + msg);
-    Log log = LogFactory.getLog(LOGGER_NAME);
-    log.info(msg);
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
+    log.info(PLATFORM + ":" + msg);
   }
 
 }
