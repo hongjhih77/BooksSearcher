@@ -19,6 +19,7 @@ package jersey;
 import io.swagger.api.gen.api.ApiOriginFilter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -37,6 +38,14 @@ import java.util.logging.Logger;
 @ComponentScan({"jersey", "jpa.repositoryimpl", "io", "util"})
 @Transactional
 public class SampleJerseyApplication extends SpringBootServletInitializer {
+
+  public static String LOGGER_NAME;
+
+  @Value("${PLATFORM}")
+  public void setDatabase(String logname) {
+    LOGGER_NAME = logname;
+  }
+
   private static Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
   public static void main(String[] args) {
     log.debug("main started~~~~~~~~~~~~~~~~");
