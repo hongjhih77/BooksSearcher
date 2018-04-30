@@ -31,7 +31,7 @@ public class LogService {
   }
 
   public static void info(String msg){
-    System.out.println("PLATFORM : " + PLATFORM);
+    System.out.println(PLATFORM + " : " + msg);
     Log log = LogFactory.getLog(LOGGER_NAME);
     log.info(msg);
   }
