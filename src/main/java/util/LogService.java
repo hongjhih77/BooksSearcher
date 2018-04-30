@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 @Component
 public class LogService {
 
-  private static final String PLATFORM = System.getProperty("PLATFORM");
+  private static final String PLATFORM = System.getenv("PLATFORM");
 
   private static final String LOGGER_NAME = PLATFORM != null ? PLATFORM : Logger.GLOBAL_LOGGER_NAME;
 
