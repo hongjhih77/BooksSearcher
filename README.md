@@ -2,6 +2,7 @@
 
 * Framework: Springboot
 * JaxRS implementation: Jersey
+* Specification: Swagger Editor, Swagger codegen, OpenApi 3.0
 * Database: PostgresSQL
 * Local: Mac, MiniKube, Docker, ZuluJDK
 * Cloud platform: GCP container engine
@@ -114,6 +115,78 @@ $ minikube service myapp
     [How to generate a ddl creation script with a modern Spring Boot + Data JPA and Hibernate setup?](https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h)
     
 
+#### Phase 2: CI/CD Multibranch Pipeline
+
+##### Jenkins on GCP setting up
+
+* [Continuous Deployment to Kubernetes Engine using Jenkins](https://cloud.google.com/solutions/continuous-delivery-jenkins-kubernetes-engine)
+* Modify <b>JenkinsFile</b> from the example provided.
+    1. Testing
+    2. Packaging
+    3. Build image
+    4. Push image to registry
+    5. Deploy Application for corresponding branch
+
+##### Configuration Depending on the Environment
+
+* Set the Active Spring Profiles
+  
+  In application.properties:
+  
+  ```sh
+  spring.profiles.active=${PLATFORM}
+  ```
+  
+  The PLATFORM is from CongifMap.
+  The k8s deployment yaml file:
+  ```sh
+  env:
+    - name: PLATFORM
+      valueFrom:
+        configMapKeyRef:
+          # The ConfigMap containing the value you want to assign to PLATFORM
+          name: application-properties-platforms
+          # Specify the key associated with the value
+          key: canary
+  ```
+  If the PLATFORM = canary, the <b>application-canary.properties</b> will be applied.
+   
+#### Phase 3: Serving multiple applications on the same IP
+
+Want to use the same IP/Domain for different service (deployment).
+
+EX: {domain}/prod/* , {domain}/canary/* 
+
+[Setting up HTTP Load Balancing with Ingress](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
+
+The following manifest describes an Ingress resource that:
+    * routes the requests with path starting with /canary/ to the <b>booksearcher-canary</b> Service
+    * outes the requests with path starting with /prod/ to the <b>booksearcher-prod</b> Service
+    
+```sh
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fanout-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /prod/*
+        backend:
+          serviceName: booksearcher-prod
+          servicePort: 8080
+      - path: /canary/*
+        backend:
+          serviceName: booksearcher-canary
+          servicePort: 8080
+```
+Save it to a <b>fanout-ingress.yaml</b>, and run:
+
+```sh
+$ kubectl create -f fanout-ingress.yaml
+```
+
 #### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
@@ -147,22 +220,25 @@ $ java -jar {swagger-codegen.jar path} gernerate \
 -l {stub type} \  #jaxrs-jersey
 -o {output path} \ 
 ```
-* https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO
 
  
 #### References
-* https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/index.html#0
+* [Deploy a Java application to Kubernetes on Google Kubernetes Engine](https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/index.html#0)
 * https://github.com/spring-guides/gs-spring-boot-docker
-* https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
-* https://blog.hasura.io/using-minikube-as-a-docker-machine-to-avoid-sharing-a-local-registry-bf5020b8197
+* [Hello Minikube](https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/)
+* [Using minikube as a “docker-machine” to avoid sharing a local-registry](https://blog.hasura.io/using-minikube-as-a-docker-machine-to-avoid-sharing-a-local-registry-bf5020b8197)
 
 ##### Java
-* https://www.leveluplunch.com/java/tutorials/016-transform-object-class-into-another-type-java8/
-* https://www.geekmj.org/jersey/spring-boot-jersey-static-web-files-support-403/
-* [ Maven Surefire Plugin / Using TestNG](http://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html)
+* [Transform object into another type with Java 8](https://www.leveluplunch.com/java/tutorials/016-transform-object-class-into-another-type-java8/)
+* [Spring Boot and Jersey (JAX-RS) static files support](https://www.geekmj.org/jersey/spring-boot-jersey-static-web-files-support-403/)
+* [Maven Surefire Plugin / Using TestNG](http://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html)
+
+##### Swagger
+* [Swagger Codegen server stub](https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO)
 
 ##### K8S
-* https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+* [kubectl CheatSheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 * [Continuous Deployment to Kubernetes Engine using Jenkins](https://cloud.google.com/solutions/continuous-delivery-jenkins-kubernetes-engine)
+* https://github.com/GoogleCloudPlatform/continuous-deployment-on-kubernetes
 * [Setting up Jenkins on Kubernetes Engine](https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial)
-* 
+* [Setting up HTTP Load Balancing with Ingress ](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
