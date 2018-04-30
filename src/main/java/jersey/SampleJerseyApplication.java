@@ -17,8 +17,6 @@
 package jersey;
 
 import io.swagger.api.gen.api.ApiOriginFilter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,9 +26,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
-import util.LogService;
-
-import java.util.logging.Logger;
 
 @SpringBootApplication
 @EntityScan("jpa.domain")
