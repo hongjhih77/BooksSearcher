@@ -4,13 +4,15 @@ metadata:
   name: fanout-ingress
 spec:
   rules:
-  - http:
+  - host: booksearcher.codemonkey.zone
+    http:
       paths:
-      - path: /prod/*
-        backend:
+      - backend:
           serviceName: booksearcher-prod
           servicePort: 8080
-      - path: /canary/*
-        backend:
+  - host: booksearchercanary.codemonkey.zone
+    http:
+      paths:
+      - backend:
           serviceName: booksearcher-canary
           servicePort: 8080
