@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: booksearcher-canary
   labels:
-    app: booksearcher
+    app: booksearcher-canary
 spec:
   template:
     metadata:
       labels:
-        app: booksearcher
+        app: booksearcher-canary
     spec:
       containers:
         - name: app
