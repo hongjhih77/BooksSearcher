@@ -1,22 +1,19 @@
 package io.swagger.api.gen.api;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.io.IOException;
-import java.util.logging.Logger;
+import org.springframework.stereotype.Component;
+import util.LogService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @javax.annotation.Generated(
   value = "io.swagger.codegen.languages.java.JavaJerseyServerCodegen",
   date = "2018-04-17T14:21:51.738+08:00[Asia/Taipei]"
 )
+@Component
 public class ApiOriginFilter implements Filter {
-
-  private final transient Log logger = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
@@ -27,7 +24,7 @@ public class ApiOriginFilter implements Filter {
     long time = System.currentTimeMillis();
     chain.doFilter(request, response);
     time = System.currentTimeMillis() - time;
-    logger.info(((HttpServletRequest) request).getRequestURI() + " : " + time + " ms ");
+    LogService.info(((HttpServletRequest) request).getRequestURI() + " : " + time + " ms ");
   }
 
   public void destroy() {}
