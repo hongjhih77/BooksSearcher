@@ -159,25 +159,28 @@ EX: {domain}/prod/* , {domain}/canary/*
 
 [Setting up HTTP Load Balancing with Ingress](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
 
-The following manifest describes an Ingress resource that:
-    * routes the requests with path starting with /canary/ to the <b>booksearcher-canary</b> Service
-    * outes the requests with path starting with /prod/ to the <b>booksearcher-prod</b> Service
+[Name based virtual hosting Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting)
     
 ```sh
+$ kubectl expose deployment booksearcher-prod --target-port=8080 --type=NodePort
+$ kubectl expose deployment booksearcher-canary --target-port=8080 --type=NodePort
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: fanout-ingress
 spec:
   rules:
-  - http:
+  - host: booksearcher.codemonkey.zone
+    http:
       paths:
-      - path: /prod/*
-        backend:
+      - backend:
           serviceName: booksearcher-prod
           servicePort: 8080
-      - path: /canary/*
-        backend:
+  - host: booksearchercanary.codemonkey.zone
+    http:
+      paths:
+      - backend:
           serviceName: booksearcher-canary
           servicePort: 8080
 ```
