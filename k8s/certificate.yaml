@@ -1,0 +1,21 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: booksercher-tls
+  namespace: production
+spec:
+  secretName: booksearcher-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: booksearcher.codemonkey.zone
+  dnsNames:
+  - booksearchercanary.codemonkey.zone
+  - booksearcher.codemonkey.zone
+  acme:
+    config:
+    - http01:
+        ingress: fanout-ingress
+      domains:
+      - booksearchercanary.codemonkey.zone
+      - booksearcher.codemonkey.zone

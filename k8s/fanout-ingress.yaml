@@ -2,7 +2,15 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: fanout-ingress
+  annotations:
+#    kubernetes.io/ingress.allow-http: "false"                                  # Disable port 80 access (see caveats)
+    kubernetes.io/ingress.global-static-ip-name: "booksearcher-static-ip"       # Name of the static global IP address in GCP
 spec:
+  tls:
+  - secretName: booksearcher-tls
+    hosts:
+    - booksearcher.codemonkey.zone
+    - booksearchercanary.codemonkey.zone
   rules:
   - host: booksearcher.codemonkey.zone
     http:
