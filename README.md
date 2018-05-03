@@ -190,6 +190,16 @@ Save it to a <b>fanout-ingress.yaml</b>, and run:
 $ kubectl create -f fanout-ingress.yaml
 ```
 
+#### Phase 4: HTTPS
+
+1. Register a domain name.
+
+2. [Linking my domain to a google cloud project](https://tw.godaddy.com/community/Managing-Domains/linking-my-domain-to-a-google-cloud-project/td-p/13086)
+
+3. Getting TLS/SSL certificates from Let’s Encrypt and refreshing them automatically
+
+    [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)
+
 #### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
@@ -245,3 +255,4 @@ $ java -jar {swagger-codegen.jar path} gernerate \
 * https://github.com/GoogleCloudPlatform/continuous-deployment-on-kubernetes
 * [Setting up Jenkins on Kubernetes Engine](https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial)
 * [Setting up HTTP Load Balancing with Ingress ](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
+* [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)
