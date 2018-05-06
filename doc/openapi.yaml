@@ -7,17 +7,13 @@ security:
 servers:
   - url: http://localhost:8080
 paths:
-  /healthcheck:
+  /actuator/health:
     get:
-      summary: health check
+      summary: SpringBoot's health check end point
       responses:
         '200':
-          description: An paged array of pets
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
+          description: Shows application health information.
+
   /books/{isbn}:
     get:
       summary: Info for books
