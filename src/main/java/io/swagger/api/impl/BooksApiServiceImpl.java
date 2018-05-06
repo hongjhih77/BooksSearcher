@@ -30,6 +30,9 @@ public class BooksApiServiceImpl extends BooksApiService {
   @Override
   public Response booksIsbnGet(String isbns, SecurityContext securityContext) {
 
+    String regex = "[0-9, /,]+";
+    if(!isbns.matches(regex)) return Response.status(Response.Status.BAD_REQUEST).build();
+
     String[] _isbns = isbns.split(",");
     List<String> bookNotFoundList = new ArrayList<>();
     List<Book> bookList = new ArrayList<>();
