@@ -4,7 +4,7 @@ import io.swagger.api.gen.api.BooksApiService;
 import io.swagger.api.gen.model.BooksSearchBody;
 import jpa.domain.Book;
 import jpa.repositoryimpl.BookRepositoryImpl;
-import logic.parser.Hendler.BookParserHandler;
+import logic.parser.handler.BookParserHandler;
 import logic.parser.impl.AmazonBookParser;
 import logic.parser.impl.BooksDotComBookParser;
 import org.springframework.beans.factory.annotation.Autowired;
