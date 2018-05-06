@@ -200,6 +200,9 @@ $ kubectl create -f fanout-ingress.yaml
 
     [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)
 
+4. Apply tls in k8s/fanout-ingress.yaml
+
+
 #### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
