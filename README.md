@@ -131,14 +131,15 @@ $ minikube service myapp
 
 * Set the Active Spring Profiles
   
-  In application.properties:
-  
+  Create ConfigMaps from literal values
   ```sh
-  spring.profiles.active=${PLATFORM}
+  $ kubectl create configmap application-properties-platforms \
+    --from-literal=canary=canary \
+    --from-literal=production=prod \
+    --from-literal=dev=dev
   ```
   
-  The PLATFORM is from CongifMap.
-  The k8s deployment yaml file:
+  Apply the env <b>PLATFORM</b> from ConfigMaps in k8s deployment yaml file:
   ```sh
   env:
     - name: PLATFORM
@@ -149,6 +150,12 @@ $ minikube service myapp
           # Specify the key associated with the value
           key: canary
   ```
+  
+  In application.properties, apply the env to let Springboot to get the corresponding properties file :
+    ```sh
+    spring.profiles.active=${PLATFORM}
+    ```
+  
   If the PLATFORM = canary, the <b>application-canary.properties</b> will be applied.
    
 #### Phase 3: Serving multiple applications on the same IP
