@@ -120,7 +120,7 @@ public class AmazonBookParser extends BookParserHandler {
   }
 
   private List<String> getAuthors(Document htmlDocument) {
-    Element bylineEle = htmlDocument.getElementById("byline");
+    Element bylineEle = htmlDocument.select("div[id^=byline]").first();
     List<String> authors = new ArrayList<>();
 
     try {
