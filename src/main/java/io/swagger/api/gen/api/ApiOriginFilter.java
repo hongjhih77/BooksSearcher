@@ -21,6 +21,7 @@ public class ApiOriginFilter implements Filter {
     res.addHeader("Access-Control-Allow-Origin", "*");
     res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
     res.addHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.addHeader("Access-Control-Request-Headers", "X-API-KEY");
     long time = System.currentTimeMillis();
     chain.doFilter(request, response);
     time = System.currentTimeMillis() - time;
