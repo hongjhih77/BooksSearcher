@@ -16,16 +16,17 @@
 
 package jersey;
 
+import io.swagger.api.gen.api.AuthFilter;
 import io.swagger.api.gen.api.BooksApi;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
+		register(AuthFilter.class);
 		register(BooksApi.class);
 		register(HealthCheckApi.class);
 		property("jersey.config.server.wadl.disableWadl", true);

@@ -50,6 +50,11 @@ spec:
                   name: application-properties-platforms
                   # Specify the key associated with the value
                   key: production
+            - name: X-API-KEY
+              valueFrom:
+                secretKeyRef:
+                  name: application-api-key
+                  key: apikey
             # [END cloudsql_secrets]
         # Change <INSTANCE_CONNECTION_NAME> here to include your GCP
         # project, the region of your Cloud SQL instance and the name
