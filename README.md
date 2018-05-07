@@ -68,7 +68,7 @@ Automatically opens up a browser window
 $ minikube service myapp
 ```
 
-##### Problem and possible Solution set of Phase 1:
+##### Problem and possible solution set of Phase 1:
 
 1. The application.properties file will be packaged. If the database configuration want to be set dynamically, redeployment will be needed. 
    
