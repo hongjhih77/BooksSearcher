@@ -81,7 +81,8 @@ public class BooksApiServiceImpl extends BooksApiService {
         new BooksSearchBody()
             .notFound(bookNotFoundList.size())
             .notFoundList(bookNotFoundList)
-            .booksFoundList(books);
+            .booksFoundList(books)
+            .found(books.size());
     // endregion
 
     return Response.ok().entity(booksSearchBody).build();
