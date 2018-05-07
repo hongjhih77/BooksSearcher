@@ -4,7 +4,7 @@ import io.swagger.api.gen.api.BooksApiService;
 import io.swagger.api.gen.model.BooksSearchBody;
 import jpa.domain.Book;
 import jpa.repositoryimpl.BookRepositoryImpl;
-import logic.parser.Hendler.BookParserHandler;
+import logic.parser.handler.BookParserHandler;
 import logic.parser.impl.AmazonBookParser;
 import logic.parser.impl.BooksDotComBookParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,9 @@ public class BooksApiServiceImpl extends BooksApiService {
 
   @Override
   public Response booksIsbnGet(String isbns, SecurityContext securityContext) {
+
+    String regex = "[0-9, /,]+";
+    if(!isbns.matches(regex)) return Response.status(Response.Status.BAD_REQUEST).build();
 
     String[] _isbns = isbns.split(",");
     List<String> bookNotFoundList = new ArrayList<>();

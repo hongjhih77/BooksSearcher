@@ -1,4 +1,4 @@
-package logic.parser.Hendler;
+package logic.parser.handler;
 
 import jpa.domain.Book;
 

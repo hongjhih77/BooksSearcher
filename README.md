@@ -68,7 +68,7 @@ Automatically opens up a browser window
 $ minikube service myapp
 ```
 
-##### Problem and possible Solution set of Phase 1:
+##### Problem and possible solution set of Phase 1:
 
 1. The application.properties file will be packaged. If the database configuration want to be set dynamically, redeployment will be needed. 
    
@@ -131,14 +131,15 @@ $ minikube service myapp
 
 * Set the Active Spring Profiles
   
-  In application.properties:
-  
+  Create ConfigMaps from literal values
   ```sh
-  spring.profiles.active=${PLATFORM}
+  $ kubectl create configmap application-properties-platforms \
+    --from-literal=canary=canary \
+    --from-literal=production=prod \
+    --from-literal=dev=dev
   ```
   
-  The PLATFORM is from CongifMap.
-  The k8s deployment yaml file:
+  Apply the env <b>PLATFORM</b> from ConfigMaps in k8s deployment yaml file:
   ```sh
   env:
     - name: PLATFORM
@@ -149,6 +150,12 @@ $ minikube service myapp
           # Specify the key associated with the value
           key: canary
   ```
+  
+  In application.properties, apply the env to let Springboot to get the corresponding properties file :
+    ```sh
+    spring.profiles.active=${PLATFORM}
+    ```
+  
   If the PLATFORM = canary, the <b>application-canary.properties</b> will be applied.
    
 #### Phase 3: Serving multiple applications on the same IP
@@ -159,25 +166,28 @@ EX: {domain}/prod/* , {domain}/canary/*
 
 [Setting up HTTP Load Balancing with Ingress](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
 
-The following manifest describes an Ingress resource that:
-    * routes the requests with path starting with /canary/ to the <b>booksearcher-canary</b> Service
-    * outes the requests with path starting with /prod/ to the <b>booksearcher-prod</b> Service
+[Name based virtual hosting Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#name-based-virtual-hosting)
     
 ```sh
+$ kubectl expose deployment booksearcher-prod --target-port=8080 --type=NodePort
+$ kubectl expose deployment booksearcher-canary --target-port=8080 --type=NodePort
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: fanout-ingress
 spec:
   rules:
-  - http:
+  - host: booksearcher.codemonkey.zone
+    http:
       paths:
-      - path: /prod/*
-        backend:
+      - backend:
           serviceName: booksearcher-prod
           servicePort: 8080
-      - path: /canary/*
-        backend:
+  - host: booksearchercanary.codemonkey.zone
+    http:
+      paths:
+      - backend:
           serviceName: booksearcher-canary
           servicePort: 8080
 ```
@@ -186,6 +196,19 @@ Save it to a <b>fanout-ingress.yaml</b>, and run:
 ```sh
 $ kubectl create -f fanout-ingress.yaml
 ```
+
+#### Phase 4: HTTPS
+
+1. Register a domain name.
+
+2. [Linking my domain to a google cloud project](https://tw.godaddy.com/community/Managing-Domains/linking-my-domain-to-a-google-cloud-project/td-p/13086)
+
+3. Getting TLS/SSL certificates from Let’s Encrypt and refreshing them automatically
+
+    [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)
+
+4. Apply tls in k8s/fanout-ingress.yaml
+
 
 #### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
@@ -242,3 +265,4 @@ $ java -jar {swagger-codegen.jar path} gernerate \
 * https://github.com/GoogleCloudPlatform/continuous-deployment-on-kubernetes
 * [Setting up Jenkins on Kubernetes Engine](https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial)
 * [Setting up HTTP Load Balancing with Ingress ](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
+* [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)

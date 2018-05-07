@@ -3,7 +3,7 @@ package logic.parser.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jpa.domain.Book;
-import logic.parser.Hendler.BookParserHandler;
+import logic.parser.handler.BookParserHandler;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

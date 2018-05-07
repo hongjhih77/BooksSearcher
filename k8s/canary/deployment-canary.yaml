@@ -3,12 +3,12 @@ kind: Deployment
 metadata:
   name: booksearcher-canary
   labels:
-    app: booksearcher
+    app: canary
 spec:
   template:
     metadata:
       labels:
-        app: booksearcher
+        app: canary
     spec:
       containers:
         - name: app
@@ -17,13 +17,13 @@ spec:
             - containerPort: 8080
           readinessProbe:
             httpGet:
-                path: /canary/healthcheck
+                path: /actuator/health
                 port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
-                path: /canary/healthcheck
+                path: /actuator/health
                 port: 8080
             initialDelaySeconds: 40
             periodSeconds: 20

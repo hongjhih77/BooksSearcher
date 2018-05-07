@@ -1,7 +1,7 @@
 package logic.parser.impl;
 
 import jpa.domain.Book;
-import logic.parser.Hendler.BookParserHandler;
+import logic.parser.handler.BookParserHandler;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
