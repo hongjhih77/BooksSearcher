@@ -1,13 +1,36 @@
-#### Environments:
+### Environments:
 
-* Framework: Springboot
-* JaxRS implementation: Jersey
-* Specification: Swagger Editor, Swagger codegen, OpenApi 3.0
+* Framework: Springboot, Hibernate
+* JAX-RS implementation: Jersey
+* Specification: Swagger Editor, Swagger CodeGen, OpenApi 3.0
 * Database: PostgresSQL
 * Local: Mac, MiniKube, Docker, ZuluJDK
-* Cloud platform: GCP container engine
+* Google Cloud platform: Kubernetes engine, Cloud SQL, Load Balancing, Container Registry, Cloud Source Repositories, Logging 
 
-#### Phase 1: Sample Jersey RESTfull API application lunched up locally
+##### Ecosystem of Development on this project
+
+Loop:
+
+1. Draft specification using OpenApi 3.0.  
+   artifact: **_doc/openapi.yaml_**
+
+2. Generate server stub using Swagger CodeGen CLI.  
+   artifacts: **_src/main/java/io.swagger.api.gen.api/_**
+
+3. Complete the implementation of the JAX-RS API.   
+   artifacts: **_src/main/java/io.swagger.api.impl/_**
+
+4. Git Push.
+
+5. Continuous deployment to Kubernetes Engine using Jenkins.    
+   artifacts: **_k8s/_**, **_Dockerfile_**, **_Jenkinsfile_**
+
+6. Generate documentation and client library using Swagger CodeGen CLI.    
+   artifacts: **_doc/html2/index.html_**
+
+---
+
+### Phase 1: Sample Jersey RESTfull API application lunched up locally
 
 ##### Connecting to Cloud SQL: 
    
@@ -114,13 +137,14 @@ $ minikube service myapp
     
     [How to generate a ddl creation script with a modern Spring Boot + Data JPA and Hibernate setup?](https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h)
     
+---
 
-#### Phase 2: CI/CD Multibranch Pipeline
+### Phase 2: CI/CD Multibranch Pipeline
 
 ##### Jenkins on GCP setting up
 
 * [Continuous Deployment to Kubernetes Engine using Jenkins](https://cloud.google.com/solutions/continuous-delivery-jenkins-kubernetes-engine)
-* Modify <b>JenkinsFile</b> from the example provided.
+* Modify **_JenkinsFile_** from the example provided.
     1. Testing
     2. Packaging
     3. Build image
@@ -139,7 +163,7 @@ $ minikube service myapp
     --from-literal=dev=dev
   ```
   
-  Apply the env <b>PLATFORM</b> from ConfigMaps in k8s deployment yaml file:
+  Apply the env **_PLATFORM_** from ConfigMaps in k8s deployment yaml file:
   ```sh
   env:
     - name: PLATFORM
@@ -156,8 +180,10 @@ $ minikube service myapp
     spring.profiles.active=${PLATFORM}
     ```
   
-  If the PLATFORM = canary, the <b>application-canary.properties</b> will be applied.
-   
+  If the PLATFORM = canary, the **_application-canary.properties_** will be applied.
+
+---
+
 #### Phase 3: Serving multiple applications on the same IP
 
 Want to use the same IP/Domain for different service (deployment).
@@ -191,11 +217,13 @@ spec:
           serviceName: booksearcher-canary
           servicePort: 8080
 ```
-Save it to a <b>fanout-ingress.yaml</b>, and run:
+Save it to a **_fanout-ingress.yaml_**, and run:
 
 ```sh
 $ kubectl create -f fanout-ingress.yaml
 ```
+
+---
 
 #### Phase 4: HTTPS
 
@@ -209,8 +237,9 @@ $ kubectl create -f fanout-ingress.yaml
 
 4. Apply tls in k8s/fanout-ingress.yaml
 
+---
 
-#### Cheat Sheet
+### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
 $ minikube dashboard
@@ -238,14 +267,14 @@ $ kubectl logs <POD-NAME>
 
 Swagger Codegen for server stub/client library cmd
 ```sh
-$ java -jar {swagger-codegen.jar path} gernerate \ 
+$ java -jar {swagger-codegen.jar path} generate \ 
 -i {yaml path} \  #openapi.yaml
 -l {stub type} \  #jaxrs-jersey
 -o {output path} \ 
 ```
 
  
-#### References
+### References
 * [Deploy a Java application to Kubernetes on Google Kubernetes Engine](https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/index.html#0)
 * https://github.com/spring-guides/gs-spring-boot-docker
 * [Hello Minikube](https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/)
