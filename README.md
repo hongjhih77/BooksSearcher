@@ -184,7 +184,7 @@ $ minikube service myapp
 
 ---
 
-#### Phase 3: Serving multiple applications on the same IP
+### Phase 3: Serving multiple applications on the same IP
 
 Want to use the same IP/Domain for different service (deployment).
 
@@ -225,7 +225,7 @@ $ kubectl create -f fanout-ingress.yaml
 
 ---
 
-#### Phase 4: HTTPS
+### Phase 4: HTTPS
 
 1. Register a domain name.
 
