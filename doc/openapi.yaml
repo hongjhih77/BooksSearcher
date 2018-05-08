@@ -2,8 +2,10 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Book Searcher
+  description: You can search for books' info
 servers:
-  - url: http://localhost:8080
+  - url: https://booksearcher.codemonkey.zone
+  - url: https://booksearchercanary.codemonkey.zone
 paths:
   /actuator/health:
     get:
@@ -36,7 +38,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BooksSearchBody"
         '400':
-          description: Bad request. isbn must be composed of delimiter comma.
+          description: Bad request. isbn must be composed of delimiter comma and isbns.
         '401':
            $ref: "#/components/responses/UnauthorizedError"
         default:
