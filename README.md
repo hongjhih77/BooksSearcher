@@ -20,10 +20,11 @@ Loop:
 3. Complete the implementation of the JAX-RS API.   
    artifacts: **_src/main/java/io.swagger.api.impl/_**
 
-4. Git Push.
-
-5. Continuous deployment to Kubernetes Engine using Jenkins.    
+4. Continuous deployment to Kubernetes Engine using Jenkins.    
    artifacts: **_k8s/_**, **_Dockerfile_**, **_Jenkinsfile_**
+   
+   * Git Push to Canary branch. Jenkins will deployment will automatically triggered base on the changes of the branch.
+   * If pass the end-to-end test on the canary site, merge the canary into master.  
 
 6. Generate documentation and client library using Swagger CodeGen CLI.    
    artifacts: **_doc/html2/index.html_**
@@ -244,6 +245,8 @@ $ kubectl create -f fanout-ingress.yaml
 1. Logging with Google Pub/Sub, [ELK stack](https://www.elastic.co/elk-stack), [Dropwizard Metrics](https://github.com/dropwizard/metrics).
 
 2. [K8S cronjob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/) practice.
+
+3. End-to-End test using [Rest-Assured](https://github.com/rest-assured/rest-assured) or other client library generated from Swagger CodeGen CLI. 
 
 ### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
