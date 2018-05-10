@@ -7,7 +7,9 @@
 * Local: Mac, MiniKube, Docker, ZuluJDK
 * Google Cloud platform: Kubernetes engine, Cloud SQL, Load Balancing, Container Registry, Cloud Source Repositories, Logging 
 
-##### Ecosystem of Development on this project
+---
+
+### Ecosystem of Development on this project
 
 Loop:
 
@@ -248,6 +250,8 @@ $ kubectl create -f fanout-ingress.yaml
 
 3. End-to-End test using [Rest-Assured](https://github.com/rest-assured/rest-assured) or other client library generated from Swagger CodeGen CLI. 
 
+---
+
 ### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
@@ -282,6 +286,7 @@ $ java -jar {swagger-codegen.jar path} generate \
 -o {output path} \ 
 ```
 
+---
  
 ### References
 * [Deploy a Java application to Kubernetes on Google Kubernetes Engine](https://codelabs.developers.google.com/codelabs/cloud-springboot-kubernetes/index.html#0)
