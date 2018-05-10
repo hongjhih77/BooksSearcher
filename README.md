@@ -239,6 +239,12 @@ $ kubectl create -f fanout-ingress.yaml
 
 ---
 
+### TODO LIST
+
+1. Logging with Google Pub/Sub, [ELK stack](https://www.elastic.co/elk-stack), [Dropwizard Metrics](https://github.com/dropwizard/metrics).
+
+2. [K8S cronjob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/) practice.
+
 ### Cheat Sheet
 Open the Kubernetes dashboard in a browser:
 ```sh
@@ -295,3 +301,6 @@ $ java -jar {swagger-codegen.jar path} generate \
 * [Setting up Jenkins on Kubernetes Engine](https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial)
 * [Setting up HTTP Load Balancing with Ingress ](https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer)
 * [Tutorial for installing cert-manager to get HTTPS certificates from Let’s Encrypt by ahmetb](https://github.com/ahmetb/gke-letsencrypt)
+
+##### Recommended Books
+* [High-Performance Java Persistence](https://github.com/vladmihalcea/high-performance-java-persistence)
