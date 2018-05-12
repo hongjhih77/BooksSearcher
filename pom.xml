@@ -26,7 +26,7 @@
         <jackson-datatype-joda-version>2.8.9</jackson-datatype-joda-version>
         <testng-version>6.9.6</testng-version>
         <maven-surefire-plugin-version>2.21.0</maven-surefire-plugin-version>
-        <rest-assured-version>3.1.0</rest-assured-version>>
+        <rest-assured-version>3.1.0</rest-assured-version>
     </properties>
 
     <build>
