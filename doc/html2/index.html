@@ -728,7 +728,35 @@ margin-bottom: 20px;
       "description" : "https://swagger.io/docs/specification/data-models/data-types/#string",
       "format" : "date"
     },
-    "language" : {
+    "publisher" : {
+      "type" : "string"
+    }
+  }
+};
+        
+    
+        
+            defs.BookColumnName = {
+  "properties" : {
+    "isbn13" : {
+      "type" : "string"
+    },
+    "isbn10" : {
+      "type" : "string"
+    },
+    "title" : {
+      "type" : "string"
+    },
+    "originalTile" : {
+      "type" : "string"
+    },
+    "pages" : {
+      "type" : "string"
+    },
+    "author" : {
+      "type" : "string"
+    },
+    "publishDate" : {
       "type" : "string"
     },
     "publisher" : {
@@ -802,6 +830,10 @@ margin-bottom: 20px;
                 
                   <li class="nav-header" data-group="Book"><a href="#api-Book">API Methods - Book</a></li>
                   
+                    <li data-group="Book" data-name="airtableBooksIsbnPost" class="">
+                      <a href="#api-Book-airtableBooksIsbnPost">airtableBooksIsbnPost</a>
+                    </li>
+                  
                     <li data-group="Book" data-name="booksIsbnGet" class="">
                       <a href="#api-Book-booksIsbnGet">booksIsbnGet</a>
                     </li>
@@ -845,6 +877,627 @@ margin-bottom: 20px;
                 <section id="api-Book">
                   <h1>Book</h1>
                   
+                    <div id="api-Book-airtableBooksIsbnPost">
+                      <article id="api-Book-airtableBooksIsbnPost-0" data-group="User" data-name="airtableBooksIsbnPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>airtableBooksIsbnPost</h1>
+                          <p>save boos to airtable</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/airtable/books/{isbn}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Book-airtableBooksIsbnPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Book-airtableBooksIsbnPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Book-airtableBooksIsbnPost-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST -H "X-API-KEY: [[apiKey]]" "https://booksearcher.codemonkey.zone/airtable/books/{isbn}?apiUrl="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.BookApi;
+
+import java.io.File;
+import java.util.*;
+
+public class BookApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure API key authorization: ApiKeyAuth
+        ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+        ApiKeyAuth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //ApiKeyAuth.setApiKeyPrefix("Token");
+        
+        
+
+        BookApi apiInstance = new BookApi();
+        
+        BookColumnName bookcolumnname = ; // BookColumnName | 
+        
+        String isbn = isbn_example; // String | isbn10 or isbn13
+        
+        String airtableApiKey = airtableApiKey_example; // String | api key from provided by AirTable
+        
+        String apiUrl = apiUrl_example; // String | the entire url provided by AirTable
+        
+        try {
+            Object result = apiInstance.airtableBooksIsbnPost(bookcolumnname, isbn, airtableApiKey, apiUrl);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling BookApi#airtableBooksIsbnPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.BookApi;
+
+public class BookApiExample {
+
+    public static void main(String[] args) {
+        BookApi apiInstance = new BookApi();
+        
+        BookColumnName bookcolumnname = ; // BookColumnName | 
+        
+        String isbn = isbn_example; // String | isbn10 or isbn13
+        
+        String airtableApiKey = airtableApiKey_example; // String | api key from provided by AirTable
+        
+        String apiUrl = apiUrl_example; // String | the entire url provided by AirTable
+        
+        try {
+            Object result = apiInstance.airtableBooksIsbnPost(bookcolumnname, isbn, airtableApiKey, apiUrl);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling BookApi#airtableBooksIsbnPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: ApiKeyAuth)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"X-API-KEY"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"X-API-KEY"];
+
+
+BookColumnName *bookcolumnname = ; // 
+String *isbn = isbn_example; // isbn10 or isbn13
+String *airtableApiKey = airtableApiKey_example; // api key from provided by AirTable
+String *apiUrl = apiUrl_example; // the entire url provided by AirTable
+
+
+BookApi *apiInstance = [[BookApi alloc] init];
+
+// save boos to airtable
+[apiInstance airtableBooksIsbnPostWithCompletionHandler: :bookcolumnname
+    isbn:isbn
+    airtableApiKey:airtableApiKey
+    apiUrl:apiUrl
+              ^(Object output, NSError* error) {
+
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var BookSearcher = require('book_searcher');
+
+var defaultClient = BookSearcher.ApiClient.instance;
+
+// Configure API key authorization: ApiKeyAuth
+var ApiKeyAuth = defaultClient.authentications['ApiKeyAuth'];
+ApiKeyAuth.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKeyAuth.apiKeyPrefix['X-API-KEY'] = "Token"
+
+
+
+var api = new BookSearcher.BookApi()
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.airtableBooksIsbnPost(bookcolumnname, isbn, airtableApiKey, apiUrlcallback);
+
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class airtableBooksIsbnPostExample
+    {
+        public void main()
+        {
+            
+            // Configure API key authorization: ApiKeyAuth
+            Configuration.Default.ApiKey.Add("X-API-KEY", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("X-API-KEY", "Bearer");
+            
+
+            var apiInstance = new BookApi();
+            
+            
+            
+            var bookcolumnname = new BookColumnName(); // BookColumnName | 
+            
+            
+            
+            var isbn = isbn_example;  // String | isbn10 or isbn13
+            
+            
+            
+            
+            var airtableApiKey = airtableApiKey_example;  // String | api key from provided by AirTable
+            
+            
+            
+            
+            var apiUrl = apiUrl_example;  // String | the entire url provided by AirTable
+            
+            
+            
+
+            try
+            {
+                
+                // save boos to airtable
+                
+                Object result = apiInstance.airtableBooksIsbnPost(bookcolumnname, isbn, airtableApiKey, apiUrl);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling BookApi.airtableBooksIsbnPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+Swagger\Client\Configuration::getDefaultConfiguration()->setApiKey('X-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// Swagger\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-KEY', 'Bearer');
+
+
+$api_instance = new Swagger\Client\Api{{classname}}();
+$bookcolumnname = ; // BookColumnName | 
+$isbn = isbn_example; // String | isbn10 or isbn13
+$airtableApiKey = airtableApiKey_example; // String | api key from provided by AirTable
+$apiUrl = apiUrl_example; // String | the entire url provided by AirTable
+
+
+try {
+    $result = $api_instance->airtableBooksIsbnPost($bookcolumnname, $isbn, $airtableApiKey, $apiUrl);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling BookApi->airtableBooksIsbnPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::BookApi;
+
+# Configure API key authorization: ApiKeyAuth
+$WWW::SwaggerClient::Configuration::api_key->{'X-API-KEY'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::SwaggerClient::Configuration::api_key_prefix->{'X-API-KEY'} = "Bearer";
+
+
+my $api_instance = WWW::SwaggerClient::BookApi->new();
+my $bookcolumnname = WWW::SwaggerClient::Object::BookColumnName->new(); # BookColumnName | 
+my $isbn = [isbn_example]; # String | isbn10 or isbn13
+my $airtableApiKey = [airtableApiKey_example]; # String | api key from provided by AirTable
+my $apiUrl = [apiUrl_example]; # String | the entire url provided by AirTable
+
+
+eval { 
+    my $result = $api_instance->airtableBooksIsbnPost(bookcolumnname => $bookcolumnname, isbn => $isbn, airtableApiKey => $airtableApiKey, apiUrl => $apiUrl);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling BookApi->airtableBooksIsbnPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Book-airtableBooksIsbnPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKeyAuth
+swagger_client.configuration.api_key['X-API-KEY'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# swagger_client.configuration.api_key_prefix['X-API-KEY'] = 'Bearer'
+
+
+# create an instance of the API class
+api_instance = swagger_client.BookApi()
+bookcolumnname =  # BookColumnName | 
+isbn = isbn_example # String | isbn10 or isbn13
+airtableApiKey = airtableApiKey_example # String | api key from provided by AirTable
+apiUrl = apiUrl_example # String | the entire url provided by AirTable
+
+
+try: 
+    # save boos to airtable
+    api_response = api_instance.airtable_books_isbn_post(bookcolumnname, isbn, airtableApiKey, apiUrl)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling BookApi->airtableBooksIsbnPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                          
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                
+                                  <tr><td style="width:150px;">isbn*</td>
+<td>
+
+
+    <div id="d2e199_airtableBooksIsbnPost_isbn">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+                
+
+                
+                    <div class="inner description">
+                        isbn10 or isbn13
+                    </div>
+                
+            </div>
+            
+                
+            
+            
+                <div class="inner required">
+                    Required
+                </div>
+            
+        </div>
+    </div>
+</td>
+</tr>
+
+                                
+                            </table>
+                          
+
+                          
+                            <div class="methodsubtabletitle">Header parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                              
+                                  <tr><td style="width:150px;">airtableApiKey*</td>
+<td>
+
+
+    <div id="d2e199_airtableBooksIsbnPost_airtableApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+                
+
+                
+                    <div class="inner description">
+                        api key from provided by AirTable
+                    </div>
+                
+            </div>
+            
+                
+            
+            
+                <div class="inner required">
+                    Required
+                </div>
+            
+        </div>
+    </div>
+</td>
+</tr>
+
+                              
+                            </table>
+                          
+
+                          
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                              
+                                <tr><td style="width:150px;">bookcolumnname <span style="color:red;">*</span></td>
+<td>
+
+
+<script>
+$(document).ready(function() {
+  var schemaWrapper = ;
+  var schema = schemaWrapper.schema;
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_airtableBooksIsbnPost_bookcolumnname');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div id="d2e199_airtableBooksIsbnPost_bookcolumnname"></div>
+</td>
+</tr>
+
+                              
+                            </table>
+                          
+
+                          
+
+                          
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                              
+                                <tr><td style="width:150px;">apiUrl*</td>
+<td>
+
+
+    <div id="d2e199_airtableBooksIsbnPost_apiUrl">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+                
+
+                
+                    <div class="inner description">
+                        the entire url provided by AirTable
+                    </div>
+                
+            </div>
+            
+                
+            
+            
+                <div class="inner required">
+                    Required
+                </div>
+            
+        </div>
+    </div>
+</td>
+</tr>
+
+                              
+                            </table>
+                          
+
+                          <h2>Responses</h2>
+                          
+                            <h3> Status: 200 - Save books to Airtable successfully </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                              
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-airtableBooksIsbnPost-200-schema">Schema</a>
+                                </li>
+
+                                
+                              
+                              
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                              
+                                <div class="tab-pane active" id="responses-airtableBooksIsbnPost-200-schema">
+                                  <div id='responses-airtableBooksIsbnPost-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Save books to Airtable successfully",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "object",
+        "description" : "the response from AirTable"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-airtableBooksIsbnPost-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-airtableBooksIsbnPost-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-airtableBooksIsbnPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                                
+                              
+                              
+                            </div>
+
+                          
+                            <h3> Status: 400 - Bad request. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                              
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-airtableBooksIsbnPost-400-schema">Schema</a>
+                                </li>
+
+                                
+                              
+                              
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                              
+                                <div class="tab-pane active" id="responses-airtableBooksIsbnPost-400-schema">
+                                  <div id='responses-airtableBooksIsbnPost-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad request.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-airtableBooksIsbnPost-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-airtableBooksIsbnPost-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-airtableBooksIsbnPost-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                                
+                              
+                              
+                            </div>
+
+                          
+                            <h3> Status: 401 - API key is missing or invalid </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                              
+                              
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                              
+                              
+                            </div>
+
+                          
+                        </article>
+                      </div>
+                      <hr>
+                    
                     <div id="api-Book-booksIsbnGet">
                       <article id="api-Book-booksIsbnGet-0" data-group="User" data-name="booksIsbnGet" data-version="0">
                         <div class="pull-left">
@@ -1231,7 +1884,7 @@ except ApiException as e:
                             </div>
 
                           
-                            <h3> Status: 400 - Bad request. isbn must be composed of delimiter comma. </h3>
+                            <h3> Status: 400 - Bad request. isbn must be composed of delimiter comma and isbns. </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                               
