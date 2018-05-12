@@ -38,23 +38,7 @@ public class BooksApiServiceImpl extends BooksApiService {
     List<Book> bookList = new ArrayList<>();
 
     // region find books
-    for (String ISBN : _isbns) {
-      Optional<Book> bookOptional = bookRepository.findBookByISBN(ISBN);
-      if (bookOptional.isPresent()) {
-        bookList.add(bookOptional.get());
-        continue;
-      }
-      BookParserHandler amazonHandler = new AmazonBookParser();
-      BookParserHandler bookDotComHandler = new BooksDotComBookParser();
-      amazonHandler.setSuccessor(bookDotComHandler);
-      bookOptional = amazonHandler.processRequest(ISBN);
-      if (bookOptional.isPresent()) {
-        bookList.add(bookOptional.get());
-        bookRepository.addBook(bookOptional.get());
-      } else {
-        bookNotFoundList.add(ISBN);
-      }
-    }
+    bookRepository.findBooks(_isbns, bookNotFoundList, bookList);
     // endregion
 
     // region set response
