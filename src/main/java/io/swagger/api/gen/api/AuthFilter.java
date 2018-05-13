@@ -7,7 +7,6 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 
 @Priority(Priorities.AUTHENTICATION)
 public class AuthFilter implements ContainerRequestFilter {
@@ -15,7 +14,7 @@ public class AuthFilter implements ContainerRequestFilter {
   private static String X_API_KEY_ENV = System.getenv().getOrDefault("X-API-KEY", "");
 
   @Override
-  public void filter(ContainerRequestContext reqContext) throws IOException {
+  public void filter(ContainerRequestContext reqContext){
     String key = reqContext.getHeaderString("X-API-KEY");
 
     if (reqContext.getUriInfo().getPath().equals("actuator/health")) return;

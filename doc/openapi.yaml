@@ -47,6 +47,57 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /airtable/books/{isbn}:
+    post:
+      security:
+        - ApiKeyAuth: []
+      summary: save boos to airtable
+      tags:
+        - book
+      parameters:
+        - name: isbn
+          description: isbn10 or isbn13
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+          example: 0375725784,9780375725784
+        - name: airtableApiKey
+          description: api key from provided by AirTable
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: apiUrl
+          description: the entire url provided by AirTable
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: name of columns needed to save the books to corresponding slot
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookColumnName"
+      responses:
+        '200':
+          description: Save books to Airtable successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                description: the response from AirTable
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '401':
+           $ref: "#/components/responses/UnauthorizedError"
 components:
   responses:
     UnauthorizedError:
@@ -79,8 +130,6 @@ components:
           type: string
           format: date
           description: https://swagger.io/docs/specification/data-models/data-types/#string
-        language:
-          type: string
         publisher:
           type: string
 
@@ -99,6 +148,24 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Book"
+    BookColumnName:
+      properties:
+        isbn13:
+          type: string
+        isbn10:
+          type: string
+        title:
+          type: string
+        originalTile:
+          type: string
+        pages:
+          type: string
+        author:
+          type: string
+        publishDate:
+          type: string
+        publisher:
+          type: string
 
     Error:
       required:

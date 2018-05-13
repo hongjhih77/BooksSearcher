@@ -15,16 +15,14 @@ package io.swagger.api.gen.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.Objects;
 
-/** Book */
+/** BookColumnName */
 @javax.annotation.Generated(
   value = "io.swagger.codegen.languages.java.JavaJerseyServerCodegen",
-  date = "2018-05-12T16:32:09.250+08:00[Asia/Taipei]"
+  date = "2018-05-12T16:33:28.893+08:00[Asia/Taipei]"
 )
-public class Book {
+public class BookColumnName {
 
   @JsonProperty("isbn13")
   private String isbn13 = null;
@@ -39,18 +37,18 @@ public class Book {
   private String originalTile = null;
 
   @JsonProperty("pages")
-  private Integer pages = null;
+  private String pages = null;
 
   @JsonProperty("author")
   private String author = null;
 
   @JsonProperty("publishDate")
-  private Date publishDate = null;
+  private String publishDate = null;
 
   @JsonProperty("publisher")
   private String publisher = null;
 
-  public Book isbn13(String isbn13) {
+  public BookColumnName isbn13(String isbn13) {
     this.isbn13 = isbn13;
     return this;
   }
@@ -62,7 +60,6 @@ public class Book {
    */
   @JsonProperty("isbn13")
   @ApiModelProperty(value = "")
-  @Size(min = 13, max = 13)
   public String getIsbn13() {
     return isbn13;
   }
@@ -71,7 +68,7 @@ public class Book {
     this.isbn13 = isbn13;
   }
 
-  public Book isbn10(String isbn10) {
+  public BookColumnName isbn10(String isbn10) {
     this.isbn10 = isbn10;
     return this;
   }
@@ -83,7 +80,6 @@ public class Book {
    */
   @JsonProperty("isbn10")
   @ApiModelProperty(value = "")
-  @Size(min = 10, max = 10)
   public String getIsbn10() {
     return isbn10;
   }
@@ -92,7 +88,7 @@ public class Book {
     this.isbn10 = isbn10;
   }
 
-  public Book title(String title) {
+  public BookColumnName title(String title) {
     this.title = title;
     return this;
   }
@@ -112,7 +108,7 @@ public class Book {
     this.title = title;
   }
 
-  public Book originalTile(String originalTile) {
+  public BookColumnName originalTile(String originalTile) {
     this.originalTile = originalTile;
     return this;
   }
@@ -132,7 +128,7 @@ public class Book {
     this.originalTile = originalTile;
   }
 
-  public Book pages(Integer pages) {
+  public BookColumnName pages(String pages) {
     this.pages = pages;
     return this;
   }
@@ -144,15 +140,15 @@ public class Book {
    */
   @JsonProperty("pages")
   @ApiModelProperty(value = "")
-  public Integer getPages() {
+  public String getPages() {
     return pages;
   }
 
-  public void setPages(Integer pages) {
+  public void setPages(String pages) {
     this.pages = pages;
   }
 
-  public Book author(String author) {
+  public BookColumnName author(String author) {
     this.author = author;
     return this;
   }
@@ -172,27 +168,27 @@ public class Book {
     this.author = author;
   }
 
-  public Book publishDate(Date publishDate) {
+  public BookColumnName publishDate(String publishDate) {
     this.publishDate = publishDate;
     return this;
   }
 
   /**
-   * https://swagger.io/docs/specification/data-models/data-types/#string
+   * Get publishDate
    *
    * @return publishDate
    */
   @JsonProperty("publishDate")
-  @ApiModelProperty(value = "https://swagger.io/docs/specification/data-models/data-types/#string")
-  public Date getPublishDate() {
+  @ApiModelProperty(value = "")
+  public String getPublishDate() {
     return publishDate;
   }
 
-  public void setPublishDate(Date publishDate) {
+  public void setPublishDate(String publishDate) {
     this.publishDate = publishDate;
   }
 
-  public Book publisher(String publisher) {
+  public BookColumnName publisher(String publisher) {
     this.publisher = publisher;
     return this;
   }
@@ -220,15 +216,15 @@ public class Book {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Book book = (Book) o;
-    return Objects.equals(this.isbn13, book.isbn13)
-        && Objects.equals(this.isbn10, book.isbn10)
-        && Objects.equals(this.title, book.title)
-        && Objects.equals(this.originalTile, book.originalTile)
-        && Objects.equals(this.pages, book.pages)
-        && Objects.equals(this.author, book.author)
-        && Objects.equals(this.publishDate, book.publishDate)
-        && Objects.equals(this.publisher, book.publisher);
+    BookColumnName bookColumnName = (BookColumnName) o;
+    return Objects.equals(this.isbn13, bookColumnName.isbn13)
+        && Objects.equals(this.isbn10, bookColumnName.isbn10)
+        && Objects.equals(this.title, bookColumnName.title)
+        && Objects.equals(this.originalTile, bookColumnName.originalTile)
+        && Objects.equals(this.pages, bookColumnName.pages)
+        && Objects.equals(this.author, bookColumnName.author)
+        && Objects.equals(this.publishDate, bookColumnName.publishDate)
+        && Objects.equals(this.publisher, bookColumnName.publisher);
   }
 
   @Override
@@ -239,7 +235,7 @@ public class Book {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Book {\n");
+    sb.append("class BookColumnName {\n");
 
     sb.append("    isbn13: ").append(toIndentedString(isbn13)).append("\n");
     sb.append("    isbn10: ").append(toIndentedString(isbn10)).append("\n");

@@ -16,6 +16,7 @@
 
 package jersey;
 
+import io.swagger.api.gen.api.AirtableApi;
 import io.swagger.api.gen.api.AuthFilter;
 import io.swagger.api.gen.api.BooksApi;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -29,6 +30,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(AuthFilter.class);
 		register(BooksApi.class);
 		register(HealthCheckApi.class);
+		register(AirtableApi.class);
 		property("jersey.config.server.wadl.disableWadl", true);
 //		property(ServletProperties.FILTER_FORWARD_ON_404, true);//#for static-web-files
 	}

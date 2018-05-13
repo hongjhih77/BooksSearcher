@@ -3,6 +3,9 @@ package jpa.repositoryimpl;
 import jpa.domain.Book;
 import jpa.repository.BookSearchCriteria;
 import jpa.repository.IBookRepository;
+import logic.parser.handler.BookParserHandler;
+import logic.parser.impl.AmazonBookParser;
+import logic.parser.impl.BooksDotComBookParser;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,5 +96,25 @@ public class BookRepositoryImpl implements IBookRepository {
       LogService.errorSaveJson(isbn, e, this.getClass());
     }
     return Optional.empty();
+  }
+
+  public void findBooks(String[] _isbns, List<String> bookNotFoundList, List<Book> bookList) {
+    for (String ISBN : _isbns) {
+      Optional<Book> bookOptional = this.findBookByISBN(ISBN);
+      if (bookOptional.isPresent()) {
+        bookList.add(bookOptional.get());
+        continue;
+      }
+      BookParserHandler amazonHandler = new AmazonBookParser();
+      BookParserHandler bookDotComHandler = new BooksDotComBookParser();
+      amazonHandler.setSuccessor(bookDotComHandler);
+      bookOptional = amazonHandler.processRequest(ISBN);
+      if (bookOptional.isPresent()) {
+        bookList.add(bookOptional.get());
+        this.addBook(bookOptional.get());
+      } else {
+        bookNotFoundList.add(ISBN);
+      }
+    }
   }
 }
