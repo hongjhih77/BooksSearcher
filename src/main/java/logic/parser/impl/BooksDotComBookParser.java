@@ -27,9 +27,12 @@ public class BooksDotComBookParser extends BookParserHandler {
   @Override
   public Optional<Book> getBook(String isbn) {
 
-    String urlSearch = "http://search.books.com.tw/search/query/key/" + isbn + "/cat/all";
+    String urlSearch = "http://search.books.com.tw/search/query/key/" + isbn + "/cat/BKA";
 
-    String itemUrl = getItemUrl(urlSearch);
+    Optional<String> itemUrl_opt = getItemUrl(urlSearch);
+
+    if (!itemUrl_opt.isPresent()) return Optional.empty();
+    String itemUrl = itemUrl_opt.get();
 
     try {
       Connection connection = getConnection(itemUrl);
@@ -55,8 +58,7 @@ public class BooksDotComBookParser extends BookParserHandler {
                         .get(0))
                 .getWholeText()
                 .trim();
-      } catch (Exception e) {
-        LogService.error(e, this.getClass());
+      } catch (Exception ignore) {
       }
 
       // get authors
@@ -188,22 +190,22 @@ public class BooksDotComBookParser extends BookParserHandler {
     return Optional.empty();
   }
 
-  private String getItemUrl(String urlSearch) {
+  private Optional<String> getItemUrl(String urlSearch) {
     String itemUrl = null;
     try {
       Connection connectionSearch = getConnection(urlSearch);
       Document htmlDocument = connectionSearch.get();
       Element searchList = htmlDocument.getElementById("searchlist");
       Elements items = searchList.getElementsByClass("item");
-      if (items.size() != 1) return null;
+      if (items.size() != 1) return Optional.ofNullable(itemUrl);
       Elements h3s = items.get(0).getElementsByTag("h3");
-      if (h3s.size() != 1) return null;
+      if (h3s.size() != 1) return Optional.ofNullable(itemUrl);
       itemUrl = h3s.get(0).getElementsByTag("a").get(0).attr("href");
       itemUrl = getFinalURL(itemUrl);
     } catch (IOException e) {
       LogService.error(e, this.getClass());
     }
-    return itemUrl;
+    return Optional.ofNullable(itemUrl);
   }
 
   private Connection getConnection(String url) {
