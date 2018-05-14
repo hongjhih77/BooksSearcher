@@ -16,8 +16,11 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.*;
 
 @Repository
 @Transactional
@@ -93,13 +96,13 @@ public class BookRepositoryImpl implements IBookRepository {
               "SELECT b FROM Book b WHERE b.isbn13 = :isbn or b.isbn10 = :isbn", Book.class);
       return Optional.ofNullable(query.setParameter("isbn", isbn).getSingleResult());
     } catch (NoResultException e) {
-      LogService.errorSaveJson(isbn, e, this.getClass());
+      LogService.debug(e.getStackTrace()[1].getMethodName() + "ISBN = " + isbn);
     }
     return Optional.empty();
   }
 
   public void findBooks(String[] _isbns, List<String> bookNotFoundList, List<Book> bookList) {
-    for (String ISBN : _isbns) {
+    for (final String ISBN : _isbns) {
       Optional<Book> bookOptional = this.findBookByISBN(ISBN);
       if (bookOptional.isPresent()) {
         bookList.add(bookOptional.get());
@@ -107,8 +110,24 @@ public class BookRepositoryImpl implements IBookRepository {
       }
       BookParserHandler amazonHandler = new AmazonBookParser();
       BookParserHandler bookDotComHandler = new BooksDotComBookParser();
-      amazonHandler.setSuccessor(bookDotComHandler);
-      bookOptional = amazonHandler.processRequest(ISBN);
+      // Version 1: Chain of Responsibility
+      // amazonHandler.setSuccessor(bookDotComHandler);
+      // bookOptional = amazonHandler.processRequest(ISBN);
+
+      //Version 2:
+      ExecutorService executorService = Executors.newCachedThreadPool();
+      List<Callable<Optional<Book>>> callableList = new ArrayList<>();
+
+      callableList.add(() -> amazonHandler.getBook(ISBN));
+      callableList.add(() -> bookDotComHandler.getBook(ISBN));
+      // end Version 2
+
+      try {
+        bookOptional = getBookFromParser(executorService,callableList);
+      } catch (InterruptedException e) {
+        LogService.error(e,this.getClass());
+      }
+
       if (bookOptional.isPresent()) {
         bookList.add(bookOptional.get());
         this.addBook(bookOptional.get());
@@ -116,5 +135,35 @@ public class BookRepositoryImpl implements IBookRepository {
         bookNotFoundList.add(ISBN);
       }
     }
+  }
+  /*
+  * REF: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorCompletionService.html
+  * "To use the first non-null result of the set of tasks, ignoring any that encounter exceptions,
+  * and cancelling all other tasks when the first one is ready."
+  * */
+  private Optional<Book> getBookFromParser(Executor e, Collection<Callable<Optional<Book>>> solvers)
+      throws InterruptedException {
+
+    CompletionService<Optional<Book>> ecs = new ExecutorCompletionService<>(e);
+    int n = solvers.size();
+    List<Future<Optional<Book>>> futures = new ArrayList<>(n);
+    Book result = null;
+    try {
+      for (Callable<Optional<Book>> s : solvers) futures.add(ecs.submit(s));
+      for (int i = 0; i < n; ++i) {
+        try {
+          Optional<Book> r = ecs.take().get();
+          if (r.isPresent()) {
+            result = r.get();
+            break;
+          }
+        } catch (ExecutionException ignore) {
+        }
+      }
+    } finally {
+      for (Future<Optional<Book>> f : futures) f.cancel(true);
+    }
+
+    return Optional.ofNullable(result);
   }
 }

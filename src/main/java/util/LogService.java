@@ -34,4 +34,9 @@ public class LogService {
     log.info(PLATFORM + ":" + msg);
   }
 
+  public static void debug(String msg){
+    Log log = LogFactory.getLog(Logger.GLOBAL_LOGGER_NAME);
+    log.debug(PLATFORM + ":" + msg);
+  }
+
 }
