@@ -35,7 +35,10 @@ public class AmazonBookParser extends BookParserHandler {
             + "&field-publisher=&node=&field-p_n_condition-type=&p_n_feature_browse-bin=&field-age_range=&field-language=&field-dateop=During&field-datemod=&field-dateyear=&sort=relevanceexprank&Adv-Srch-Books-Submit.x=32&Adv-Srch-Books-Submit.y=9";
 
     try {
-      String urlBook = getItemUrl(urlSearch);
+
+      Optional<String> itemUrl_opt = getItemUrl(urlSearch);
+      if (!itemUrl_opt.isPresent()) return Optional.empty();
+      String urlBook = itemUrl_opt.get();
 
       Connection connection = getConnection(urlBook);
       Document htmlDocument = connection.get();
@@ -145,7 +148,7 @@ public class AmazonBookParser extends BookParserHandler {
     return ((TextNode) productTitleEle.childNodes().get(0)).getWholeText();
   }
 
-  private String getItemUrl(String urlSearch) throws IOException, URISyntaxException {
+  private Optional<String> getItemUrl(String urlSearch) throws IOException, URISyntaxException {
     Connection connectionSearch = getConnection(urlSearch);
     Document htmlDocument = connectionSearch.get();
     Element element_result_0 = htmlDocument.getElementById("result_0");
@@ -157,7 +160,7 @@ public class AmazonBookParser extends BookParserHandler {
     String[] strings = (uri.getHost() + uri.getPath()).split("[/]");
     String[] cleanStrings = {strings[0], strings[1], strings[2], strings[3]};
     itemUrl = String.join("/", cleanStrings);
-    return "https://" + itemUrl;
+    return Optional.of("https://" + itemUrl);
   }
 
   private Connection getConnection(String url) {
