@@ -8,7 +8,7 @@
 * Google Cloud platform: Kubernetes engine, Cloud SQL, Load Balancing, Container Registry, Cloud Source Repositories, Logging 
 
 ---
-### [Aspect of Design](./doc/design.md)
+### [Aspect of Design](./docs/design.md)
 ---
 ### Ecosystem of Development on this project
 
