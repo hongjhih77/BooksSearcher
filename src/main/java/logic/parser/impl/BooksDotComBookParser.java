@@ -214,6 +214,7 @@ public class BooksDotComBookParser extends BookParserHandler {
 
   private static String getFinalURL(String url) throws IOException {
     // https://stackoverflow.com/questions/14951696/java-urlconnection-get-the-final-redirected-url
+    url = "http:" + url;
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
     con.setInstanceFollowRedirects(false);
     con.connect();
