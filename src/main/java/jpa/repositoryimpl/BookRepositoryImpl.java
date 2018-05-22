@@ -1,6 +1,7 @@
 package jpa.repositoryimpl;
 
 import jpa.domain.Book;
+import jpa.domain.embeddable.OperationInfo;
 import jpa.repository.BookSearchCriteria;
 import jpa.repository.IBookRepository;
 import logic.parser.handler.BookParserHandler;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,6 +59,8 @@ public class BookRepositoryImpl implements IBookRepository {
   @Override
   public boolean addBook(Book book) {
     try {
+      book.setOperationInfo(new OperationInfo());
+      book.getOperationInfo().setCreateTime(Instant.now().getEpochSecond());
       entityManager.persist(book);
     } catch (PersistenceException e) {
       LogService.errorSaveJson(book, e, this.getClass());
@@ -68,6 +72,7 @@ public class BookRepositoryImpl implements IBookRepository {
   @Override
   public boolean updateBook(Book book) {
     try {
+      book.getOperationInfo().setUpdateTime(Instant.now().getEpochSecond());
       entityManager.merge(book);
     } catch (PersistenceException e) {
       LogService.errorSaveJson(book, e, this.getClass());

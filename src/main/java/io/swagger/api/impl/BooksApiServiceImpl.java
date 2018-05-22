@@ -4,9 +4,6 @@ import io.swagger.api.gen.api.BooksApiService;
 import io.swagger.api.gen.model.BooksSearchBody;
 import jpa.domain.Book;
 import jpa.repositoryimpl.BookRepositoryImpl;
-import logic.parser.handler.BookParserHandler;
-import logic.parser.impl.AmazonBookParser;
-import logic.parser.impl.BooksDotComBookParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +11,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
